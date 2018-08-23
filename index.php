@@ -8,7 +8,7 @@
 <html>
 <head>
 	<title>Report Generation</title>
-	<link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
 <body>
 	<br>
