@@ -3,7 +3,7 @@
 	require_once 'db.php';
 	$dbHost = "localhost";
 	$dbUser = "root";
-	$dbPass = "";	
+	$dbPass = "root";	
 ?>
 <html>
 <head>
