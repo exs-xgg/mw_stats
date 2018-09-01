@@ -105,8 +105,21 @@
 							$total2 = mysql_num_rows($query2);
 							
 							if ($total2 == 0) {
-								echo 'No Record Found';
-							}else{
+								$patient_philhealth = "SELECT (SELECT count(*) FROM m_patient_philhealth WHERE member_cat_id ='18') AS nhts,
+							(SELECT count(*) FROM m_patient_philhealth WHERE member_id ='MM') AS member,
+							(SELECT count(*) FROM m_patient_philhealth WHERE member_id ='DD') AS dependent,
+							(SELECT count(*) FROM m_patient_philhealth) AS patient_philhealth,
+							(SELECT count(*) FROM game_user) AS user,
+							(SELECT count(*) FROM game_user WHERE user_active = 'Y') AS useractive,
+							(SELECT count(*) FROM game_user WHERE user_active = 'N') AS userinactive";
+								// $query2 = $database->_dbQuery($patient_philhealth);
+								// $result2=$database->_dbFetch($query2);
+								$query2 = mysql_query($patient_philhealth);
+								$total2 = mysql_num_rows($query2);
+							}
+
+
+							
 							$result2= mysql_fetch_array($query2);
 							echo "<tr>";
 								echo '<td>'.$result2['nhts'].'</td>';
@@ -115,7 +128,7 @@
 								echo '<td>'.$result2['patient_philhealth'].'</td>';
 								echo '<td>'.$result2['user'].'/'.$result2['useractive'].'/'.$result2['userinactive'].'</td>';
 							echo  "</tr>";
-							}
+							
 						}	
 					?>
 				</tbody>
