@@ -49,19 +49,21 @@
 							( SELECT count(*) FROM consult) as consult,
 							( SELECT count(*) FROM family) as family,
 							( SELECT sum(population) FROM lib_catchment_barangay) as catchment";
-							// $consultCount = "SELECT count(*) consult FROM consult";
-							// $FamilyCount = "SELECT count(*) family FROM family";
-							// $query1 = mysql_query($patientCount);
-							// $result1=$database->_dbFetch($query1);
 							$query1 = mysql_query($patientCount);
 							
 							$total1 = mysql_num_rows($query1);
-
-							// $query2 = $database->_dbQuery($consultCount);
-							// $result2=$database->_dbFetch($query2);
 							if ($total1 == 0) {
-								echo 'No Record Found';
-							}else{
+								//WAFFLE QUERY FAILOVER
+								$patientCount = "SELECT ( SELECT count(*) FROM m_patient ) as patient,
+								( SELECT count(*) FROM m_consult) as consult,
+								( SELECT count(*) FROM m_family) as family,
+								( SELECT sum(barangay_population) FROM m_lib_barangay) as catchment";
+								
+								$query1 = mysql_query($patientCount);
+								
+								$total1 = mysql_num_rows($query1);
+							}
+
 							$result1= mysql_fetch_array($query1);
 							echo "<tr>";
 								echo '<td>'.$result1['patient'].'</td>';
@@ -69,7 +71,7 @@
 								echo '<td>'.$result1['consult'].'</td>';
 								echo '<td>'.$result1['catchment'].'</td>';
 							echo  "</tr>";
-							}
+							
 						}
 					?>
 				</tbody>
