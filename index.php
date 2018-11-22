@@ -90,6 +90,7 @@
 						<th>PhilHealth Dependent Count</th>
 						<th>PhilHealth Count</th>
 						<th>User Count/Active/In-active</th>
+						<th>Duplicate Patiens (WAHFFLE)</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -161,7 +162,7 @@
 								$patient_philhealth = "SELECT 
 							(SELECT count(*) FROM m_patient_philhealth where ((length(philhealth_id)!=14) and philhealth_id like '%-%') OR (length(philhealth_id)!=12 and philhealth_id not like '%-%')) AS invalid_philhealth,
 							(SELECT count(*) FROM m_family left join `m_family_members` on m_family.family_id = m_family_members.family_id where patient_id is null) AS empty_fam,
-							(SELECT count(*) FROM m_patient WHERE patient_cellphone = '0000000000' or length(patient_cellphone) != 11 or patient_cellphone = '1111111111' or patient_cellphone='9000000000') AS invalid_phone";
+							(SELECT count(*) FROM m_patient WHERE patient_cellphone = '0000000000' or length(patient_cellphone) != 11 or patient_cellphone = '1111111111' or patient_cellphone='9000000000') AS invalid_phone;"
 								// $query2 = $database->_dbQuery($patient_philhealth);
 								// $result2=$database->_dbFetch($query2);
 								$query2 = mysql_query($patient_philhealth);
@@ -175,6 +176,17 @@
 								echo '<td>'.$result2['invalid_philhealth'].'</td>';
 								echo '<td>'.$result2['empty_fam'].'</td>';
 								echo '<td>'.$result2['invalid_phone'].'</td>';
+								echo '<td>';
+$sum_distint_query = " SELECT COUNT(1) as ct
+FROM		m_patient
+GROUP BY	patient_firstname, patient_lastname, patient_middle, patient_mother
+HAVING		COUNT(1) > 1";
+$sumres =  mysql_query($sum_distint_query);
+$t = 0;
+while ($sums = mysql_fetch_assoc($sumres)) {
+	$t += $sums['ct'];
+}
+echo "$t";
 								
 							echo  "</tr>";
 							
