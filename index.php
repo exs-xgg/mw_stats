@@ -18,7 +18,7 @@
 		<form method='post' action=''>
           			<select name='rhu'>
 			              <?php 
-			              
+			        
 			  		foreach($dbarray as $key => $value){
 					if($_POST['rhu'] == $value){
 						$rhu = $key;
@@ -103,7 +103,7 @@
 							(SELECT count(*) FROM patient_philhealth) AS patient_philhealth,
 							(SELECT count(*) FROM user) AS user,
 							(SELECT count(*) FROM user WHERE is_active = 'Y') AS useractive,
-							(SELECT count(*) FROM user WHERE is_active = 'N') AS userinactive)";
+							(SELECT count(*) FROM user WHERE is_active = 'N') AS userinactive";
 							// $query2 = $database->_dbQuery($patient_philhealth);
 							// $result2=$database->_dbFetch($query2);
 							$query2 = mysql_query($patient_philhealth);
@@ -116,7 +116,7 @@
 							(SELECT count(*) FROM m_patient_philhealth) AS patient_philhealth,
 							(SELECT count(*) FROM game_user) AS user,
 							(SELECT count(*) FROM game_user WHERE user_active = 'Y') AS useractive,
-							(SELECT count(*) FROM game_user WHERE user_active = 'N') AS userinactive)";
+							(SELECT count(*) FROM game_user WHERE user_active = 'N') AS userinactive";
 								// $query2 = $database->_dbQuery($patient_philhealth);
 								// $result2=$database->_dbFetch($query2);
 								$query2 = mysql_query($patient_philhealth);
@@ -150,7 +150,7 @@
 							$patient_philhealth = "SELECT 
 							(SELECT count(*) FROM patient_philhealth where ((length(philhealth_id)!=14) and philhealth_id like '%-%') OR (length(philhealth_id)!=12 and philhealth_id not like '%-%')) AS invalid_philhealth,
 							(0) AS empty_fam,
-							(SELECT count(*) FROM patient WHERE mobile_number = '0000000000' or length(mobile_number) != 10 or mobile_number = '1111111111' or mobile_number='9000000000') AS invalid_phone)";
+							(SELECT count(*) FROM patient WHERE mobile_number = '0000000000' or length(mobile_number) != 10 or mobile_number = '1111111111' or mobile_number='9000000000') AS invalid_phone";
 							// $query2 = $database->_dbQuery($patient_philhealth);
 							// $result2=$database->_dbFetch($query2);
 							//
@@ -161,7 +161,7 @@
 								$patient_philhealth = "SELECT 
 							(SELECT * FROM m_patient_philhealth where ((length(philhealth_id)!=14) and philhealth_id like '%-%') OR (length(philhealth_id)!=12 and philhealth_id not like '%-%')) AS invalid_philhealth,
 							(SELECT count(*) FROM m_family left join `m_family_members` on m_family.family_id = m_family_members.family_id where patient_id is null) AS empty_fam,
-							(SELECT count(*) FROM m_patient WHERE patient_cellphone = '0000000000' or length(patient_cellphone) != 11 or patient_cellphone = '1111111111' or patient_cellphone='9000000000') AS invalid_phone)";
+							(SELECT count(*) FROM m_patient WHERE patient_cellphone = '0000000000' or length(patient_cellphone) != 11 or patient_cellphone = '1111111111' or patient_cellphone='9000000000') AS invalid_phone";
 								// $query2 = $database->_dbQuery($patient_philhealth);
 								// $result2=$database->_dbFetch($query2);
 								$query2 = mysql_query($patient_philhealth);
