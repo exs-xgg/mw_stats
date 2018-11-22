@@ -53,7 +53,7 @@
 							$patientCount = "SELECT ( SELECT count(*) FROM patient ) as patient,
 							( SELECT count(*) FROM consult) as consult,
 							( SELECT count(*) FROM family) as family,
-							( SELECT sum(population) FROM lib_catchment_barangay) as catchment";
+							( SELECT sum(population) FROM lib_catchment_barangay) as catchment)";
 							$query1 = mysql_query($patientCount);
 							
 							$total1 = mysql_num_rows($query1);
@@ -62,7 +62,7 @@
 								$patientCount = "SELECT ( SELECT count(*) FROM m_patient ) as patient,
 								( SELECT count(*) FROM m_consult) as consult,
 								( SELECT count(*) FROM m_family) as family,
-								( SELECT sum(barangay_population) FROM m_lib_barangay) as catchment";
+								( SELECT sum(barangay_population) FROM m_lib_barangay) as catchment)";
 								
 								$query1 = mysql_query($patientCount);
 								
@@ -103,7 +103,7 @@
 							(SELECT count(*) FROM patient_philhealth) AS patient_philhealth,
 							(SELECT count(*) FROM user) AS user,
 							(SELECT count(*) FROM user WHERE is_active = 'Y') AS useractive,
-							(SELECT count(*) FROM user WHERE is_active = 'N') AS userinactive";
+							(SELECT count(*) FROM user WHERE is_active = 'N') AS userinactive)";
 							// $query2 = $database->_dbQuery($patient_philhealth);
 							// $result2=$database->_dbFetch($query2);
 							$query2 = mysql_query($patient_philhealth);
@@ -116,7 +116,7 @@
 							(SELECT count(*) FROM m_patient_philhealth) AS patient_philhealth,
 							(SELECT count(*) FROM game_user) AS user,
 							(SELECT count(*) FROM game_user WHERE user_active = 'Y') AS useractive,
-							(SELECT count(*) FROM game_user WHERE user_active = 'N') AS userinactive";
+							(SELECT count(*) FROM game_user WHERE user_active = 'N') AS userinactive)";
 								// $query2 = $database->_dbQuery($patient_philhealth);
 								// $result2=$database->_dbFetch($query2);
 								$query2 = mysql_query($patient_philhealth);
