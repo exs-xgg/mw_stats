@@ -90,7 +90,6 @@
 						<th>PhilHealth Dependent Count</th>
 						<th>PhilHealth Count</th>
 						<th>User Count/Active/In-active</th>
-						<th>Duplicate Patiens (WAHFFLE)</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -143,7 +142,8 @@
 				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-success">HPP Statistics</div></div>
 			</div>
 			<table class="table">
-				<tr><th>Invalid Philhealth Numbers</th><th>Empty Family Folder</th><th>Invalid Phone Numbers</th></tr>
+				<tr><th>Invalid Philhealth Numbers</th><th>Empty Family Folder</th><th>Invalid Phone Numbers</th>
+						<th>Duplicate Patiens (WAHFFLE)</th></tr>
 				<?php
 						if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 						{ 
@@ -183,12 +183,12 @@
 							$sumres =  mysql_query($sum_distint_query);
 							$total3 = mysql_num_rows($sumres);
 							$t = 0;
-							if ($total3==0) {
+							//if ($total3==0) {
 								while ($sums = mysql_fetch_assoc($sumres)) {
 									$t += $sums['ct'];
 								}
 								echo "<td>$t </td>";
-							}
+							//}
 
 								
 							echo  "</tr>";
