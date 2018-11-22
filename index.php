@@ -47,7 +47,7 @@
 						{
 
 							$dbName = $_POST['rhu'];
-							$dbConnect = mysql_connect("192.168.100.11","root","root");
+							$dbConnect = mysql_connect("localhost","root","root");
 							mysql_select_db($dbName,$dbConnect);
 
 							$patientCount = "SELECT ( SELECT count(*) FROM patient ) as patient,
@@ -186,15 +186,3 @@
 </html> -->
 
 
-
-
-select * from m_family full outer join m_family_members on m_family_members.family_id = m_family.family_id
-
-
-SELECT * FROM m_family
-  LEFT JOIN m_family_members ON  m_family.family_id = m_family_members.family_id
-  WHERE m_family.family_id is null
-  UNION ALL
-  SELECT * FROM m_family
-  RIGHT JOIN m_family_members ON  m_family.family_id = m_family_members.family_id
-  WHERE  m_family.family_id is null
