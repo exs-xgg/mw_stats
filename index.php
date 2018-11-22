@@ -181,7 +181,7 @@
 							GROUP BY	patient_firstname, patient_lastname, patient_middle, patient_mother
 							HAVING		COUNT(1) > 1";
 							$sumres =  mysql_query($sum_distint_query);
-							$total3 = mysql_num_rows($sumres)
+							$total3 = mysql_num_rows($sumres);
 							$t = 0;
 							if ($total3==0) {
 								while ($sums = mysql_fetch_assoc($sumres)) {
