@@ -173,20 +173,23 @@
 
 							$result2= mysql_fetch_array($query2);
 							echo "<tr>";
-								echo '<td>'.$result2['invalid_philhealth'].'</td>';
-								echo '<td>'.$result2['empty_fam'].'</td>';
-								echo '<td>'.$result2['invalid_phone'].'</td>';
-								echo '<td>';
-$sum_distint_query = " SELECT COUNT(1) as ct
-FROM		m_patient
-GROUP BY	patient_firstname, patient_lastname, patient_middle, patient_mother
-HAVING		COUNT(1) > 1";
-$sumres =  mysql_query($sum_distint_query);
-$t = 0;
-while ($sums = mysql_fetch_assoc($sumres)) {
-	$t += $sums['ct'];
-}
-echo "$t";
+							echo '<td>'.$result2['invalid_philhealth'].'</td>';
+							echo '<td>'.$result2['empty_fam'].'</td>';
+							echo '<td>'.$result2['invalid_phone'].'</td>';
+							$sum_distint_query = " SELECT COUNT(1) as ct
+							FROM		m_patient
+							GROUP BY	patient_firstname, patient_lastname, patient_middle, patient_mother
+							HAVING		COUNT(1) > 1";
+							$sumres =  mysql_query($sum_distint_query);
+							$total3 = mysql_num_rows($sumres)
+							$t = 0;
+							if ($total3==0) {
+								while ($sums = mysql_fetch_assoc($sumres)) {
+									$t += $sums['ct'];
+								}
+								echo "<td>$t </td>";
+							}
+
 								
 							echo  "</tr>";
 							
