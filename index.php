@@ -5,13 +5,13 @@
 	// $dbUser = "root";
 	// $dbPass = "root";	
 ?>
-<!-- <html>
+<html>
 <head>
 	<title>Hybrid Report Generation</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	<meta author="Wireless Access for Health">
 </head>
-<body> -->
+<body>
 	<br>
 	<div class="container">
 		
