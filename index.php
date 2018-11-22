@@ -53,7 +53,7 @@
 							$patientCount = "SELECT ( SELECT count(*) FROM patient ) as patient,
 							( SELECT count(*) FROM consult) as consult,
 							( SELECT count(*) FROM family) as family,
-							( SELECT sum(population) FROM lib_catchment_barangay) as catchment)";
+							( SELECT sum(population) FROM lib_catchment_barangay) as catchment";
 							$query1 = mysql_query($patientCount);
 							
 							$total1 = mysql_num_rows($query1);
@@ -62,7 +62,7 @@
 								$patientCount = "SELECT ( SELECT count(*) FROM m_patient ) as patient,
 								( SELECT count(*) FROM m_consult) as consult,
 								( SELECT count(*) FROM m_family) as family,
-								( SELECT sum(barangay_population) FROM m_lib_barangay) as catchment)";
+								( SELECT sum(barangay_population) FROM m_lib_barangay) as catchment";
 								
 								$query1 = mysql_query($patientCount);
 								
