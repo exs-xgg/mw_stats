@@ -199,11 +199,15 @@
 						}	
 					?>
 			</table>
-			<button class="btn btn-success" onclick="a()">Generate Invalid Philhealth</button> <button class="btn btn-primary" onclick="verify()">Generate Invalid Numbers</button>
+			<button class="btn btn-success" onclick="phic()">Generate Invalid Philhealth</button> <button class="btn btn-primary" onclick="cell()">Generate Invalid Numbers</button>
 	</div>
 </body>
 <script type="text/javascript">
-	function verify(){
+	function phic(){
+		var password = prompt("You are about to view sensitive information. Password is required");
+		window.location.href = "generate_invalid_phic.php?p=" + (password);
+	}
+	function cell(){
 		var password = prompt("You are about to view sensitive information. Password is required");
 		window.location.href = "generate_invalid_numbers.php?p=" + (password);
 	}
