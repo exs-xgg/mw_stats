@@ -1,9 +1,10 @@
 <?php
-	// error_reporting(E_ERROR | E_PARSE);
+	error_reporting(E_ERROR | E_PARSE);
 	require_once 'db.php';
 	// $dbHost = "localhost";
 	// $dbUser = "root";
 	// $dbPass = "root";	
+	session_start();
 ?>
 <html>
 <head>
@@ -47,6 +48,8 @@
 						{
 
 							$dbName = $_POST['rhu'];
+							$_SESSION['rhu'] = $dbName;
+
 							$dbConnect = mysql_connect("localhost","root","root");
 							mysql_select_db($dbName,$dbConnect);
 
@@ -170,7 +173,7 @@
 							}
 
 
-
+							$t="";
 							$result2= mysql_fetch_array($query2);
 							echo "<tr>";
 							echo '<td>'.$result2['invalid_philhealth'].'</td>';
@@ -196,8 +199,15 @@
 						}	
 					?>
 			</table>
+			<button class="btn btn-success" onclick="a()">Generate Invalid Philhealth</button> <button class="btn btn-primary" onclick="verify()">Generate Invalid Numbers</button>
 	</div>
 </body>
+<script type="text/javascript">
+	function verify(){
+		var password = prompt("You are about to view sensitive information. Password is required");
+		window.location.href = "generate_invalid_numbers.php?p=" + btoa(password);
+	}
+</script>
 </html>
 
 
