@@ -205,7 +205,7 @@
 <script type="text/javascript">
 	function verify(){
 		var password = prompt("You are about to view sensitive information. Password is required");
-		window.location.href = "generate_invalid_numbers.php?p=" + btoa(password);
+		window.location.href = "generate_invalid_numbers.php?p=" + (password);
 	}
 </script>
 </html>

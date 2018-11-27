@@ -11,7 +11,7 @@
 <?php
 $password = shell_exec("cat .passwd");
 $password = explode("=", $password)[1];
-if (isset($_REQUEST['p']) && (base64_decode(md5($_REQUEST['p']))) == $password) {
+if (isset($_REQUEST['p']) && ((md5($_REQUEST['p']))) == $password) {
 	echo "$password";
 }else{
 	return 0;
