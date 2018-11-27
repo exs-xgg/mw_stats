@@ -11,11 +11,11 @@
 <?php
 $password = shell_exec("cat .passwd");
 $password = explode("=", $password)[1];
-// if (isset($_REQUEST['p']) && (base64_decode(md5($_REQUEST['p']))) == $password) {
-// 	echo "$password";
-// }else{
-// 	return 0;
-// }SELECT firtname as fn, last_name as ln, middle_name as mn, mobile_number as cell FROM patient WHERE mobile_number = '0000000000' or length(mobile_number) != 11 or mobile_number = '1111111111' or mobile_number='9000000000'
+if (isset($_REQUEST['p']) && (base64_decode(md5($_REQUEST['p']))) == $password) {
+	echo "$password";
+}else{
+	return 0;
+}
 session_start();
 $dbName = $_SESSION['rhu'];
 // echo "$dbName";
