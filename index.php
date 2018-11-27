@@ -5,6 +5,10 @@
 	// $dbUser = "root";
 	// $dbPass = "root";	
 	session_start();
+
+
+
+							$dbConnect = mysql_connect("localhost","root","root");
 ?>
 <html>
 <head>
@@ -24,7 +28,8 @@
 					if($_POST['rhu'] == $value){
 						$rhu = $key;
 					}
-					  echo "<option class='custom-select' value='$value' ".($_POST['rhu'] == $value ? 'selected' : '').">$key</option>";
+					  echo "<option value='$value' ".($_POST['rhu'] == $value ? 'selected' : '')."> $key</option>
+					  ";
 					}
 			 	      ?>
           			  </select>
@@ -50,7 +55,6 @@
 							$dbName = $_POST['rhu'];
 							$_SESSION['rhu'] = $dbName;
 
-							$dbConnect = mysql_connect("localhost","root","root");
 							mysql_select_db($dbName,$dbConnect);
 
 							$patientCount = "SELECT ( SELECT count(*) FROM patient ) as patient,
