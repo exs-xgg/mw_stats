@@ -3,7 +3,7 @@
 
 $dbarray = array(
 "Please Select" => "",
-"AA Sta Ignacia" => "staignacia",
+"Bayog RHU" => "hf_bayog",
 "Imelda RHU" => "hf_imelda",
 "Sta Barbara RHU" => "hf20174th_stabarbara",
 "Burgos RHU" => "hf20174th_burgos",
