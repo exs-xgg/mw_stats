@@ -78,8 +78,8 @@
 							$total1 = mysql_num_rows($query1);
 							if ($total1 == 0) {
 								//WAFFLE QUERY FAILOVER
-								$patientCount = "SELECT ( SELECT count(*) FROM m_patient ) as patient,
-								( SELECT count(*) FROM m_consult) as consult,
+								$patientCount = "SELECT ( SELECT count(*) FROM m_patient where consult_date between date('$start_date') and date('$end_date')) as patient,
+								( SELECT count(*) FROM m_consult where registration_date between date('$start_date') and date('$end_date')) as consult,
 								( SELECT count(*) FROM m_family) as family,
 								( SELECT sum(barangay_population) FROM m_lib_barangay) as catchment";
 								
