@@ -2,7 +2,7 @@
 
 
 
-							$dbConnect = mysql_connect("localhost","root","root");
+							$dbConnect = mysqli_connect("localhost","root","root");
 
 							$query = "show databases like 'hf_%' as db";
 							$result = $dbConnect->query($query);
