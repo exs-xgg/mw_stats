@@ -105,6 +105,7 @@ $dbarray = array(
 "hf_quezonhill1" => "hf_quezonhill1",
 "hf_quirino1" => "hf_quirino1",
 "hf_quirinohill1" => "hf_quirinohill1",
+"hf_ramos1" => "hf_ramos1",
 "hf_roxas" => "hf_roxas" ,
 "hf_rtlim1" => "hf_rtlim1",
 "hf_salcedo1" => "hf_salcedo1",
