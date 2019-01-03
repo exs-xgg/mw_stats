@@ -33,6 +33,12 @@
 					}
 			 	      ?>
           			  </select>
+          			  <input type="date" name="start_date" <?php if (isset( $_POST['start_date'])): ?>
+          			  	value="<?php echo( $_POST['start_date']); ?>"
+          			  <?php endif ?>>
+          			  <input type="date" name="end_date"<?php if (isset( $_POST['start_date'])): ?>
+          			  	value="<?php echo( $_POST['end_date']); ?>"
+          			  <?php endif ?>>
 				  <input type='submit' class="btn btn-outline-primary" name='go' value='Submit'>  	
 		</form>
 		<div class="row">
@@ -49,20 +55,24 @@
 				</thead>
 				<tbody>
 					<?php 
+
 						if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 						{
-
+							// if (isset($_POST['start_date']) && isset($_POST['end_date'])) {
+								$start_date = $_POST['start_date'];
+								$end_date = $_POST['end_date'];
+							// }
 							$dbName = $_POST['rhu'];
 							$_SESSION['rhu'] = $dbName;
 
 							mysql_select_db($dbName,$dbConnect);
 
-							$patientCount = "SELECT ( SELECT count(*) FROM patient ) as patient,
-							( SELECT count(*) FROM consult) as consult,
-							( SELECT count(*) FROM family) as family,
+							$patientCount = "SELECT ( SELECT count(*) FROM patient where created_at between date('$start_date') and date('$end_date')) as patient,
+							( SELECT count(*) FROM consult where created_at between date('$start_date') and date('$end_date')) as consult,
+							( SELECT count(*) FROM family ) as family,
 							( SELECT sum(population) FROM lib_catchment_barangay) as catchment";
 							$query1 = mysql_query($patientCount);
-							
+							// echo "$patientCount";
 							$total1 = mysql_num_rows($query1);
 							if ($total1 == 0) {
 								//WAFFLE QUERY FAILOVER
