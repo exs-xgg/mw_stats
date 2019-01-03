@@ -71,6 +71,10 @@
 							( SELECT count(*) FROM consult where created_at between date('$start_date') and date('$end_date')) as consult,
 							( SELECT count(*) FROM family ) as family,
 							( SELECT sum(population) FROM lib_catchment_barangay) as catchment";
+
+							?>
+<script type="text/javascript">console.log("<?php echo $patientCount; ?>");</script>
+							<?php
 							$query1 = mysql_query($patientCount);
 							// echo "$patientCount";
 							$total1 = mysql_num_rows($query1);
