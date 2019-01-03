@@ -82,7 +82,7 @@
 								( SELECT count(*) FROM m_consult where consult_date between date('$start_date') and date('$end_date')) as consult,
 								( SELECT count(*) FROM m_family) as family,
 								( SELECT sum(barangay_population) FROM m_lib_barangay) as catchment";
-								echo "$patientCount";
+								// echo "$patientCount";
 								$query1 = mysql_query($patientCount);
 								
 								$total1 = mysql_num_rows($query1);
