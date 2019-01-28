@@ -144,7 +144,13 @@ $dbarray = array(
 "hf_victoria1" => "hf_victoria1",
 "hf_victoria2" => "hf_victoria2" ,
 "hf_vigancho1" => "hf_vigancho1",
-"hf_villareal1" => "hf_villareal1 " );
+"hf_villareal1" => "hf_villareal1",
+"hf_malasiqui1" => "hf_malasiqui1",
+"hf_malasiqui2" => "hf_malasiqui2",
+"hf_mangaldan1" => "hf_mangaldan1",
+"hf_tayug1" => "hf_tayug1",
+"hf_urdaneta1" => "hf_urdaneta1",
+"hf_pagudpud1" => "hf_pagudpud1");
 ksort($dbarray);
 // var_dump($dbarray);
 ?>
