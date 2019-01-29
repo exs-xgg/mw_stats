@@ -30,16 +30,17 @@
           			  </select>
 				  <input type='submit' class="btn btn-outline-primary" name='go' value='Submit'>  	
 		</form>
+		Fields marked with (*) are not sortable by dates
 		<div class="row">
-			<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-danger">Technical Statistics</div></div>
+			<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-warning">Technical Statistics</div></div>
 		</div>
 			<table class='table'>
 				<thead>
 					<tr>
 						<th>Patient Registered Count</th>
-						<th>Family Folder Count</th>
+						<th>Family Folder Count*</th>
 						<th>Consult Notes Count</th>
-						<th>Catchment Population</th>
+						<th>Catchment Population*</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -50,7 +51,7 @@
 							$dbName = $_POST['rhu'];
 							$_SESSION['rhu'] = $dbName;
 
-							$dbConnect = mysql_connect("localhost","root","root");
+							$dbConnect = mysql_connect("mw2.wahlocal.ph","root","root");
 							mysql_select_db($dbName,$dbConnect);
 
 							$patientCount = "SELECT ( SELECT count(*) FROM patient ) as patient,
@@ -88,11 +89,11 @@
 			<table class='table'>
 				<thead>
 					<tr>
-						<th>NHTS Members Registered</th>
-						<th>PhilHealth Member Count</th>
-						<th>PhilHealth Dependent Count</th>
-						<th>PhilHealth Count</th>
-						<th>User Count/Active/In-active</th>
+						<th>NHTS Members Registered*</th>
+						<th>PhilHealth Member Count*</th>
+						<th>PhilHealth Dependent Count*</th>
+						<th>PhilHealth Count*</th>
+						<th>User Count/Active/In-active*</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -142,11 +143,15 @@
 				</tbody>
 			</table>
 			<div class="row">
-				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-success">HPP Statistics</div></div>
+				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-info">HPP Statistics</div></div>
 			</div>
 			<table class="table">
-				<tr><th>Invalid Philhealth Numbers</th><th>Empty Family Folder</th><th>Invalid Phone Numbers</th>
-						<th>Duplicate Patiens (WAHFFLE)</th></tr>
+				<tr>
+				<th>Invalid Philhealth Numbers*</th>
+				<th>Empty Family Folder*</th>
+				<th>Invalid Phone Numbers*</th>
+				<th>Duplicate Patiens (WAHFFLE)*</th>
+				</tr>
 				<?php
 						if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 						{ 
@@ -198,6 +203,13 @@
 							
 						}	
 					?>
+			</table>
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-danger">Blood Type (under maintenance)</div></div>
+			</div>
+			<table class="table">
+				<tr><th></th><th>Empty Family Folder</th><th>Invalid Phone Numbers</th>
+						<th>Duplicate Patiens (WAHFFLE)</th></tr>
 			</table>
 			<button class="btn btn-success" onclick="phic()">Generate Invalid Philhealth</button> <button class="btn btn-primary" onclick="cell()">Generate Invalid Numbers</button>
 	</div>
