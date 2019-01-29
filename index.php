@@ -5,6 +5,10 @@
 	// $dbUser = "root";
 	// $dbPass = "root";	
 	session_start();
+
+
+
+$dbConnect = mysql_connect("mw2.wahlocal.ph","root","root");
 ?>
 <html>
 <head>
@@ -24,10 +28,17 @@
 					if($_POST['rhu'] == $value){
 						$rhu = $key;
 					}
-					  echo "<option class='custom-select' value='$value' ".($_POST['rhu'] == $value ? 'selected' : '').">$key</option>";
+					  echo "<option value='$value' ".($_POST['rhu'] == $value ? 'selected' : '')."> $key</option>
+					  ";
 					}
 			 	      ?>
           			  </select>
+          			  <input type="date" name="start_date" <?php if (isset( $_POST['start_date'])): ?>
+          			  	value="<?php echo( $_POST['start_date']); ?>"
+          			  <?php endif ?>>
+          			  <input type="date" name="end_date"<?php if (isset( $_POST['start_date'])): ?>
+          			  	value="<?php echo( $_POST['end_date']); ?>"
+          			  <?php endif ?>>
 				  <input type='submit' class="btn btn-outline-primary" name='go' value='Submit'>  	
 		</form>
 		Fields marked with (*) are not sortable by dates
@@ -45,29 +56,34 @@
 				</thead>
 				<tbody>
 					<?php 
+
 						if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 						{
-
+							// if (isset($_POST['start_date']) && isset($_POST['end_date'])) {
+								$start_date = $_POST['start_date'];
+								$end_date = $_POST['end_date'];
+							// }
 							$dbName = $_POST['rhu'];
 							$_SESSION['rhu'] = $dbName;
 
-							$dbConnect = mysql_connect("mw2.wahlocal.ph","root","root");
 							mysql_select_db($dbName,$dbConnect);
 
-							$patientCount = "SELECT ( SELECT count(*) FROM patient ) as patient,
-							( SELECT count(*) FROM consult) as consult,
-							( SELECT count(*) FROM family) as family,
+							$patientCount = "SELECT ( SELECT count(*) FROM patient where created_at between date('$start_date') and date('$end_date')) as patient,
+							( SELECT count(*) FROM consult where created_at between date('$start_date') and date('$end_date')) as consult,
+							( SELECT count(*) FROM family ) as family,
 							( SELECT sum(population) FROM lib_catchment_barangay) as catchment";
-							$query1 = mysql_query($patientCount);
+
 							
+							$query1 = mysql_query($patientCount);
+							// echo "$patientCount";
 							$total1 = mysql_num_rows($query1);
 							if ($total1 == 0) {
 								//WAFFLE QUERY FAILOVER
-								$patientCount = "SELECT ( SELECT count(*) FROM m_patient ) as patient,
-								( SELECT count(*) FROM m_consult) as consult,
+								$patientCount = "SELECT ( SELECT count(*) FROM m_patient where registration_date between date('$start_date') and date('$end_date')) as patient,
+								( SELECT count(*) FROM m_consult where consult_date between date('$start_date') and date('$end_date')) as consult,
 								( SELECT count(*) FROM m_family) as family,
 								( SELECT sum(barangay_population) FROM m_lib_barangay) as catchment";
-								
+								// echo "$patientCount";
 								$query1 = mysql_query($patientCount);
 								
 								$total1 = mysql_num_rows($query1);
@@ -207,9 +223,22 @@
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-danger">Blood Type (under maintenance)</div></div>
 			</div>
+			<ul>
+			<li>A</li>
+			<li>B</li>
+			<li>AB</li>
+			<li>O</li>
+			</ul>
+			
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-success">Patient Group (under maintenance)</div></div>
+			</div>
 			<table class="table">
-				<tr><th></th><th>Empty Family Folder</th><th>Invalid Phone Numbers</th>
-						<th>Duplicate Patiens (WAHFFLE)</th></tr>
+				<tr>
+				<th>5 <</th>
+				<th>6-17</th>
+				<th>18-x</th>
+				<th>Duplicate Patiens (WAHFFLE)</th></tr>
 			</table>
 			<button class="btn btn-success" onclick="phic()">Generate Invalid Philhealth</button> <button class="btn btn-primary" onclick="cell()">Generate Invalid Numbers</button>
 	</div>
