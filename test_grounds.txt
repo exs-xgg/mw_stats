@@ -1,0 +1,38 @@
+5 >
+6-17
+18-35
+36-59
+60 <
+
+teenage pregnancy	
+
+
+select 
+		(select count(*) as om from m_patient where birthdate between ) as 5b ,
+		(select count(*) as om from m_patient where birthdate between ) as 6to17, 
+		(select count(*) as om from m_patient where birthdate between ) as 18to35, 
+		(select count(*) as om from m_patient where birthdate between ) as 36to59, 
+		(select count(*) as om from m_patient where birthdate between ) as 60a
+
+select (select count(*) as ct from patient where datediff(now(), birthdate) / 365 <= 5 and created_at between date('$start_date') and date('$end_date') ) as '_5b',
+	(select count(*) as ct from patient where (17 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 6) and created_at between date('$start_date') and date('$end_date') ) as '_6to17',
+	(select count(*) as ct from patient where (35 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 17)  and created_at between date('$start_date') and date('$end_date') ) as '_18to35',
+	(select count(*) as ct from patient where (59 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 36)  and created_at between date('$start_date') and date('$end_date') ) as '_36to59',
+	(select count(*) as ct from patient where (60 <= datediff(now(), birthdate) / 365) and created_at between date('$start_date') and date('$end_date') ) as '_60a'
+
+
+    
+select (select count(*) as ct from patient where datediff(now(), birthdate) / 365 <= 5 and created_at between date('2010-01-01') and date('2019-12-31') ) as '_5b',
+	(select count(*) as ct from patient where (17 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 6) and created_at between date('2010-01-01') and date('2019-12-31') ) as '_6to17',
+	(select count(*) as ct from patient where (35 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 17)  and created_at between date('2010-01-01') and date('2019-12-31') ) as '_18to35',
+	(select count(*) as ct from patient where (59 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 36)  and created_at between date('2010-01-01') and date('2019-12-31') ) as '_36to59',
+	(select count(*) as ct from patient where (60 <= datediff(now(), birthdate) / 365) and created_at between date('2010-01-01') and date('2019-12-31') ) as '_60a'
+	
+
+    when datediff(now(), patient_dob) / 365.25 => 6 then '6to17'
+    when datediff(now(), patient_dob) / 365.25 > 19 then '20 - 30'
+    else 'under 20'
+  end as age_group
+ group by age_group
+
+ select * from m_patient where (59 >= datediff(now(), patient_dob) / 365) and (datediff(now(), patient_dob) / 365 <= 36)
