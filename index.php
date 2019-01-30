@@ -1,14 +1,20 @@
 <?php
-	// error_reporting(E_ERROR | E_PARSE);
+	error_reporting(E_ERROR | E_PARSE);
 	require_once 'db.php';
 	// $dbHost = "localhost";
 	// $dbUser = "root";
 	// $dbPass = "root";	
 	session_start();
+	if (isset($_POST['start_date']) && isset($_POST['end_date']) && !($_POST['start_date']=="" && $_POST['end_date']=="")) {
+		$start_date = $_POST['start_date'];
+		$end_date = $_POST['end_date'];
+	}else{
+		$start_date = '2000-01-01';
+		$end_date = '2019-12-31';
+	}
 
 
-
-							$dbConnect = mysql_connect("localhost","root","root");
+$dbConnect = mysql_connect("mw2.wahlocal.ph","root","root");
 ?>
 <html>
 <head>
@@ -41,16 +47,17 @@
           			  <?php endif ?>>
 				  <input type='submit' class="btn btn-outline-primary" name='go' value='Submit'>  	
 		</form>
+		Fields marked with (*) are not sortable by dates
 		<div class="row">
-			<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-danger">Technical Statistics</div></div>
+			<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-warning">Technical Statistics</div></div>
 		</div>
 			<table class='table'>
 				<thead>
 					<tr>
 						<th>Patient Registered Count</th>
-						<th>Family Folder Count</th>
+						<th>Family Folder Count*</th>
 						<th>Consult Notes Count</th>
-						<th>Catchment Population</th>
+						<th>Catchment Population*</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -58,10 +65,7 @@
 
 						if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 						{
-							// if (isset($_POST['start_date']) && isset($_POST['end_date'])) {
-								$start_date = $_POST['start_date'];
-								$end_date = $_POST['end_date'];
-							// }
+							
 							$dbName = $_POST['rhu'];
 							$_SESSION['rhu'] = $dbName;
 
@@ -104,11 +108,11 @@
 			<table class='table'>
 				<thead>
 					<tr>
-						<th>NHTS Members Registered</th>
-						<th>PhilHealth Member Count</th>
-						<th>PhilHealth Dependent Count</th>
-						<th>PhilHealth Count</th>
-						<th>User Count/Active/In-active</th>
+						<th>NHTS Members Registered*</th>
+						<th>PhilHealth Member Count*</th>
+						<th>PhilHealth Dependent Count*</th>
+						<th>PhilHealth Count*</th>
+						<th>User Count/Active/In-active*</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -158,11 +162,15 @@
 				</tbody>
 			</table>
 			<div class="row">
-				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-success">HPP Statistics</div></div>
+				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-info">HPP Statistics</div></div>
 			</div>
 			<table class="table">
-				<tr><th>Invalid Philhealth Numbers</th><th>Empty Family Folder</th><th>Invalid Phone Numbers</th>
-						<th>Duplicate Patiens (WAHFFLE)</th></tr>
+				<tr>
+				<th>Invalid Philhealth Numbers*</th>
+				<th>Empty Family Folder*</th>
+				<th>Invalid Phone Numbers*</th>
+				<th>Duplicate Patiens (WAHFFLE)*</th>
+				</tr>
 				<?php
 						if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 						{ 
@@ -214,6 +222,140 @@
 							
 						}	
 					?>
+			</table>
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-danger">Blood Type* (under maintenance)</div></div>
+			</div>
+			<?php
+if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
+{ 
+	//MISUWAH
+	$patient_philhealth = "select 
+	(select count(*) as om from patient where blood_type='O-') as om ,
+	(select count(*) as om from patient where blood_type='O+') as op, 
+	(select count(*) as om from patient where blood_type='A-') as am, 
+	(select count(*) as om from patient where blood_type='A+') as ap,
+	(select count(*) as om from patient where blood_type='B-') as bm, 
+	(select count(*) as om from patient where blood_type='B+') as bp, 
+	(select count(*) as om from patient where blood_type='AB+') as abp, 
+	(select count(*) as om from patient where blood_type='AB-') as abm,
+	(select count(*) as om from patient where blood_type='') as na";
+	// $query2 = $database->_dbQuery($patient_philhealth);
+	// $result2=$database->_dbFetch($query2);
+	//
+	$query2 = mysql_query($patient_philhealth);
+	$total2 = mysql_num_rows($query2);
+	
+
+	//WAFFLE
+	if ($total2 == 0) {
+		$patient_philhealth = "select 
+		(select count(*) as om from m_patient where blood_type='O-') as om ,
+		(select count(*) as om from m_patient where blood_type='O+') as op, 
+		(select count(*) as om from m_patient where blood_type='A-') as am, 
+		(select count(*) as om from m_patient where blood_type='A+') as ap, 
+		(select count(*) as om from m_patient where blood_type='B-') as bm, 
+		(select count(*) as om from m_patient where blood_type='B+') as bp, 
+		(select count(*) as om from m_patient where blood_type='AB+') as abp, 
+		(select count(*) as om from m_patient where blood_type='AB-') as abm,
+		(select count(*) as om from m_patient where blood_type='') as na";
+		// $query2 = $database->_dbQuery($patient_philhealth);
+		// $result2=$database->_dbFetch($query2);
+		$query2 = mysql_query($patient_philhealth);
+		$total2 = mysql_num_rows($query2);
+	}
+
+
+	$t="";
+	$result2= mysql_fetch_array($query2);
+	$om=$result2['om'];
+	$op=$result2['op'];
+	$am=$result2['am'];
+	$ap=$result2['ap'];
+	$abp=$result2['abp'];
+	$abm=$result2['abm'];
+	$na=$result2['na'];
+	$bp=$result2['bp'];
+	$bm=$result2['bm'];
+
+	
+}
+
+?>
+			<table class="table table-striped">
+			<tr><td>A+	</td><td><?php echo $ap; ?></td></tr>
+			<tr><td>A-	</td><td><?php echo $am; ?></td></tr>
+			<tr><td>B+	</td><td><?php echo $bp; ?></td></tr>
+			<tr><td>B-	</td><td><?php echo $bm; ?></td></tr>
+			<tr><td>AB+	</td><td><?php echo $abp; ?></td></tr>
+			<tr><td>AB-	</td><td><?php echo $abm; ?></td></tr>
+			<tr><td>O+	</td><td><?php echo $op; ?></td></tr>
+			<tr><td>O-	</td><td><?php echo $om; ?></td></tr>
+			<tr><td>Unknown/NA</td><td>	<?php echo $na; ?></td>
+			</table>
+			
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-success">Patient Group (under maintenance)</div></div>
+			</div>
+
+			<?php
+if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
+{ 
+	//MISUWAH
+	$patient_philhealth = "select (select count(*) as ct from patient where datediff(now(), birthdate) / 365 <= 5 and created_at between date('$start_date') and date('$end_date') ) as '_5b',
+	(select count(*) as ct from patient where (17 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 6) and created_at between date('$start_date') and date('$end_date') ) as '_6to17',
+	(select count(*) as ct from patient where (35 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 17)  and created_at between date('$start_date') and date('$end_date') ) as '_18to35',
+	(select count(*) as ct from patient where (59 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 36)  and created_at between date('$start_date') and date('$end_date') ) as '_36to59',
+	(select count(*) as ct from patient where (60 <= datediff(now(), birthdate) / 365) and created_at between date('$start_date') and date('$end_date') ) as '_60a'";
+	// $query2 = $database->_dbQuery($patient_philhealth);
+	// $result2=$database->_dbFetch($query2);
+	//
+	$query2 = mysql_query($patient_philhealth);
+	$total2 = mysql_num_rows($query2);
+	
+
+	//WAFFLE
+	if ($total2 == 0) {
+		$patient_philhealth = "select (select count(*) as ct from m_patient where datediff(now(), patient_dob) / 365 <= 5 and registration_date between date('$start_date') and date('$end_date') ) as '_5b',
+		(select count(*) as ct from m_patient where (17 >= datediff(now(), patient_dob) / 365) and (datediff(now(), patient_dob) / 365 >= 6) and registration_date between date('$start_date') and date('$end_date') ) as '_6to17',
+		(select count(*) as ct from m_patient where (35 >= datediff(now(), patient_dob) / 365) and (datediff(now(), patient_dob) / 365 >= 17)  and registration_date between date('$start_date') and date('$end_date') ) as '_18to35',
+		(select count(*) as ct from m_patient where (59 >= datediff(now(), patient_dob) / 365) and (datediff(now(), patient_dob) / 365 >= 36)  and registration_date between date('$start_date') and date('$end_date') ) as '_36to59',
+		(select count(*) as ct from m_patient where (60 <= datediff(now(), patient_dob) / 365) and registration_date between date('$start_date') and date('$end_date') ) as '_60a'
+		";
+		// $query2 = $database->_dbQuery($patient_philhealth);
+		// $result2=$database->_dbFetch($query2);
+		$query2 = mysql_query($patient_philhealth);
+		$total2 = mysql_num_rows($query2);
+	}
+
+
+	$t="";
+	$result2= mysql_fetch_array($query2);
+	$_5b=$result2['_5b'];
+	$_6to17=$result2['_6to17'];
+	$_18to35=$result2['_18to35'];
+	$_36to59=$result2['_36to59'];
+	$_60a=$result2['_60a'];
+
+	
+}
+
+?>
+			<table class="table">
+				<tr>
+				<th>5 below</th>
+				<th>6-17</th>
+				<th>18-35</th>
+				<th>36-59</th>
+				<th>60 above</th>
+				</tr>
+				<tr>
+				<td><?php echo $_5b; ?></td>
+				<td><?php echo $_6to17; ?></td>
+				<td><?php echo $_18to35; ?></td>
+				<td><?php echo $_36to59; ?></td>
+				<td><?php echo $_60a; ?></td>
+				</tr>
 			</table>
 			<button class="btn btn-success" onclick="phic()">Generate Invalid Philhealth</button> <button class="btn btn-primary" onclick="cell()">Generate Invalid Numbers</button>
 	</div>
