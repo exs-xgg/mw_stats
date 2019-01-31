@@ -224,7 +224,7 @@ $dbConnect = mysql_connect("mw2.wahlocal.ph","root","root");
 					?>
 			</table>
 			<div class="row">
-				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-danger">Blood Type* (under maintenance)</div></div>
+				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-danger">Blood Type*</div></div>
 			</div>
 			<?php
 if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
@@ -295,18 +295,35 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 			</table>
 			
 			<div class="row">
-				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-success">Patient Group (under maintenance)</div></div>
+				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-success">Demographics (abridged)</div></div>
 			</div>
 
 			<?php
 if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 { 
 	//MISUWAH
-	$patient_philhealth = "select (select count(*) as ct from patient where datediff(now(), birthdate) / 365 <= 5 and created_at between date('$start_date') and date('$end_date') ) as '_5b',
-	(select count(*) as ct from patient where (17 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 6) and created_at between date('$start_date') and date('$end_date') ) as '_6to17',
-	(select count(*) as ct from patient where (35 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 17)  and created_at between date('$start_date') and date('$end_date') ) as '_18to35',
-	(select count(*) as ct from patient where (59 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 36)  and created_at between date('$start_date') and date('$end_date') ) as '_36to59',
-	(select count(*) as ct from patient where (60 <= datediff(now(), birthdate) / 365) and created_at between date('$start_date') and date('$end_date') ) as '_60a'";
+	$patient_philhealth = "
+	select 
+		(select count(*) as ct from patient where datediff(now(), birthdate) / 365 <= 5 and created_at between date('$start_date') and date('$end_date') ) as '_5b',
+		(select count(*) as ct from patient where datediff(now(), birthdate) / 365 <= 5 and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_5bm',
+		(select count(*) as ct from patient where datediff(now(), birthdate) / 365 <= 5 and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_5bf',
+	
+		(select count(*) as ct from patient where (17 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 6) and created_at between date('$start_date') and date('$end_date') ) as '_6to17',
+		(select count(*) as ct from patient where (17 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 6) and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_6to17m',
+		(select count(*) as ct from patient where (17 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 6) and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_6to17f',
+	
+	
+		(select count(*) as ct from patient where (35 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 17)  and created_at between date('$start_date') and date('$end_date') ) as '_18to35',
+		(select count(*) as ct from patient where (35 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 17)  and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_18to35m',
+		(select count(*) as ct from patient where (35 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 17)  and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_18to35f',
+		
+		(select count(*) as ct from patient where (59 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 36)  and created_at between date('$start_date') and date('$end_date') ) as '_36to59',
+		(select count(*) as ct from patient where (59 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 36)  and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_36to59m',
+		(select count(*) as ct from patient where (59 >= datediff(now(), birthdate) / 365) and (datediff(now(), birthdate) / 365 >= 36)  and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_36to59f',
+		
+		(select count(*) as ct from patient where (60 <= datediff(now(), birthdate) / 365) and created_at between date('$start_date') and date('$end_date') ) as '_60a',
+		(select count(*) as ct from patient where (60 <= datediff(now(), birthdate) / 365) and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_60af',
+		(select count(*) as ct from patient where (60 <= datediff(now(), birthdate) / 365) and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_60am'";
 	// $query2 = $database->_dbQuery($patient_philhealth);
 	// $result2=$database->_dbFetch($query2);
 	//
@@ -316,11 +333,27 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 
 	//WAFFLE
 	if ($total2 == 0) {
-		$patient_philhealth = "select (select count(*) as ct from m_patient where datediff(now(), patient_dob) / 365 <= 5 and registration_date between date('$start_date') and date('$end_date') ) as '_5b',
-		(select count(*) as ct from m_patient where (17 >= datediff(now(), patient_dob) / 365) and (datediff(now(), patient_dob) / 365 >= 6) and registration_date between date('$start_date') and date('$end_date') ) as '_6to17',
-		(select count(*) as ct from m_patient where (35 >= datediff(now(), patient_dob) / 365) and (datediff(now(), patient_dob) / 365 >= 17)  and registration_date between date('$start_date') and date('$end_date') ) as '_18to35',
+		$patient_philhealth = "select 
+		
+		(select count(*) as ct from m_patient where datediff(now(), patient_dob) / 365 <= 5 and registration_date between date('$start_date') and date('$end_date')) as '_5b',
+		(select count(*) as ct from m_patient where datediff(now(), patient_dob) / 365 <= 5 and registration_date between date('$start_date') and date('$end_date')  and patient_gender like 'M') as '_5bm',
+		(select count(*) as ct from m_patient where datediff(now(), patient_dob) / 365 <= 5 and registration_date between date('$start_date') and date('$end_date')  and patient_gender like 'F') as '_5bf',
+
+		(select count(*) as ct from m_patient where (17 >= datediff(now(), patient_dob) / 365) and (datediff(now(), patient_dob) / 365 >= 6) and registration_date between date('$start_date') and date('$end_date')) as '_6to17',
+		(select count(*) as ct from m_patient where (17 >= datediff(now(), patient_dob) / 365) and (datediff(now(), patient_dob) / 365 >= 6) and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'M') as '_6to17m',
+		(select count(*) as ct from m_patient where (17 >= datediff(now(), patient_dob) / 365) and (datediff(now(), patient_dob) / 365 >= 6) and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'F') as '_6to17f',
+
+		(select count(*) as ct from m_patient where (35 >= datediff(now(), patient_dob) / 365) and (datediff(now(), patient_dob) / 365 >= 18)  and registration_date between date('$start_date') and date('$end_date') ) as '_18to35',
+		(select count(*) as ct from m_patient where (35 >= datediff(now(), patient_dob) / 365) and (datediff(now(), patient_dob) / 365 >= 18) and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'F') as '_18to35f',
+		(select count(*) as ct from m_patient where (35 >= datediff(now(), patient_dob) / 365) and (datediff(now(), patient_dob) / 365 >= 18) and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'M') as '_18to35m',
+
 		(select count(*) as ct from m_patient where (59 >= datediff(now(), patient_dob) / 365) and (datediff(now(), patient_dob) / 365 >= 36)  and registration_date between date('$start_date') and date('$end_date') ) as '_36to59',
-		(select count(*) as ct from m_patient where (60 <= datediff(now(), patient_dob) / 365) and registration_date between date('$start_date') and date('$end_date') ) as '_60a'
+		(select count(*) as ct from m_patient where (59 >= datediff(now(), patient_dob) / 365) and (datediff(now(), patient_dob) / 365 >= 36)  and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'M') as '_36to59m',
+		(select count(*) as ct from m_patient where (59 >= datediff(now(), patient_dob) / 365) and (datediff(now(), patient_dob) / 365 >= 36)  and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'F') as '_36to59f',
+
+		(select count(*) as ct from m_patient where (60 <= datediff(now(), patient_dob) / 365) and registration_date between date('$start_date') and date('$end_date') ) as '_60a',
+		(select count(*) as ct from m_patient where (60 <= datediff(now(), patient_dob) / 365) and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'F') as '_60af',
+		(select count(*) as ct from m_patient where (60 <= datediff(now(), patient_dob) / 365) and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'M') as '_60am'
 		";
 		// $query2 = $database->_dbQuery($patient_philhealth);
 		// $result2=$database->_dbFetch($query2);
@@ -338,23 +371,77 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 	$_60a=$result2['_60a'];
 
 	
+	$_5b=$result2['_5b'];
+	$_5bf=$result2['_5bf'];
+	$_5bm=$result2['_5bm'];
+
+	$_6to17=$result2['_6to17'];
+	$_6to17f=$result2['_6to17f'];
+	$_6to17m=$result2['_6to17m'];
+	
+	$_18to35=$result2['_18to35'];
+	$_18to35m=$result2['_18to35m'];
+	$_18to35f=$result2['_18to35f'];
+
+	$_36to59=$result2['_36to59'];
+	$_36to59f=$result2['_36to59f'];
+	$_36to59m=$result2['_36to59m'];
+
+	$_60a=$result2['_60a'];
+	$_60af=$result2['_60af'];
+	$_60am=$result2['_60am'];
+
+	
 }
 
 ?>
-			<table class="table">
+			<table class="taable" align="center">
 				<tr>
-				<th>5 below</th>
-				<th>6-17</th>
-				<th>18-35</th>
-				<th>36-59</th>
-				<th>60 above</th>
+				<th colspan="2">5 below</th>
+				<th colspan="2">6-17</th>
+				<th colspan="2">18-35</th>
+				<th colspan="2">36-59</th>
+				<th colspan="2">60 above</th>
+				<th colspan="2">Total</th>
 				</tr>
 				<tr>
-				<td><?php echo $_5b; ?></td>
-				<td><?php echo $_6to17; ?></td>
-				<td><?php echo $_18to35; ?></td>
-				<td><?php echo $_36to59; ?></td>
-				<td><?php echo $_60a; ?></td>
+					<td>M</td>
+					<td>F</td>
+					<td>M</td>
+					<td>F</td>
+					<td>M</td>
+					<td>F</td>
+					<td>M</td>
+					<td>F</td>
+					<td>M</td>
+					<td>F</td>
+					<td>M</td>
+					<td>F</td>
+				</tr>
+				<tr>
+				
+				</tr>
+					<td><?php echo $_5bm; ?></td>
+					<td><?php echo $_5bf; ?></td>
+					<td><?php echo $_6to17m; ?></td>
+					<td><?php echo $_6to17f; ?></td>
+					<td><?php echo $_18to35m; ?></td>
+					<td><?php echo $_18to35f; ?></td>
+					<td><?php echo $_36to59m; ?></td>
+					<td><?php echo $_36to59f; ?></td>
+					<td><?php echo $_60am; ?></td>
+					<td><?php echo $_60af; ?></td>
+
+					<td><?php echo $_5bm + $_6to17m + $_18to35m + $_36to59m + $_60am; ?></td>
+					<td><?php echo $_5bf + $_6to17f + $_18to35f + $_36to59f + $_60af; ?></td>
+				</th>
+				<tr>
+					<td colspan="2"><?php echo $_5b; ?></td>
+					<td colspan="2"><?php echo $_6to17; ?></td>
+					<td colspan="2"><?php echo $_18to35; ?></td>
+					<td colspan="2"><?php echo $_36to59; ?></td>
+					<td colspan="2"><?php echo $_60a; ?></td>
+					<td colspan="2"><?php echo $_5b + $_6to17 + $_18to35 + $_36to59 + $_60a; ?></td>
 				</tr>
 			</table>
 			<button class="btn btn-success" onclick="phic()">Generate Invalid Philhealth</button> <button class="btn btn-primary" onclick="cell()">Generate Invalid Numbers</button>
@@ -373,3 +460,13 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 </html>
 
 
+
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+th, td {
+  padding: 15px;
+  text-align: center;
+}
+</style>
