@@ -239,7 +239,7 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 	(select count(*) as om from patient where blood_type='B+') as bp, 
 	(select count(*) as om from patient where blood_type='AB+') as abp, 
 	(select count(*) as om from patient where blood_type='AB-') as abm,
-	(select count(*) as om from patient where blood_type='') as na";
+	(select count(*) as om from patient where blood_type='' or blood_type='NA') as na";
 	// $query2 = $database->_dbQuery($patient_philhealth);
 	// $result2=$database->_dbFetch($query2);
 	//
