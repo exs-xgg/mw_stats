@@ -170,6 +170,7 @@ $dbConnect = mysql_connect("mw2.wahlocal.ph","root","root");
 				<th>Empty Family Folder*</th>
 				<th>Invalid Phone Numbers*</th>
 				<th>Duplicate Patiens (WAHFFLE)*</th>
+				<th>Date of Last Consultation</th>
 				</tr>
 				<?php
 						if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
@@ -178,7 +179,8 @@ $dbConnect = mysql_connect("mw2.wahlocal.ph","root","root");
 							$patient_philhealth = "SELECT 
 							(SELECT count(*) FROM patient_philhealth where ((length(philhealth_id)!=14) and philhealth_id like '%-%') OR (length(philhealth_id)!=12 and philhealth_id not like '%-%')) AS invalid_philhealth,
 							(0) AS empty_fam,
-							(SELECT count(*) FROM patient WHERE mobile_number = '0000000000' or length(mobile_number) != 10 or mobile_number = '1111111111' or mobile_number='9000000000') AS invalid_phone";
+							(SELECT count(*) FROM patient WHERE mobile_number = '0000000000' or length(mobile_number) != 10 or mobile_number = '1111111111' or mobile_number='9000000000') AS invalid_phone,
+							(SELECT date(created_at) FROM consult order by created_at desc limit 1) as last_consult";
 							// $query2 = $database->_dbQuery($patient_philhealth);
 							// $result2=$database->_dbFetch($query2);
 							//
@@ -189,7 +191,8 @@ $dbConnect = mysql_connect("mw2.wahlocal.ph","root","root");
 								$patient_philhealth = "SELECT 
 							(SELECT count(*) FROM m_patient_philhealth where ((length(philhealth_id)!=14) and philhealth_id like '%-%') OR (length(philhealth_id)!=12 and philhealth_id not like '%-%')) AS invalid_philhealth,
 							(SELECT count(*) FROM m_family left join `m_family_members` on m_family.family_id = m_family_members.family_id where patient_id is null) AS empty_fam,
-							(SELECT count(*) FROM m_patient WHERE patient_cellphone = '0000000000' or length(patient_cellphone) != 11 or patient_cellphone = '1111111111' or patient_cellphone='9000000000') AS invalid_phone;";
+							(SELECT count(*) FROM m_patient WHERE patient_cellphone = '0000000000' or length(patient_cellphone) != 11 or patient_cellphone = '1111111111' or patient_cellphone='9000000000') AS invalid_phone,
+							(SELECT date(consult_timestamp) FROM m_consult order by consult_timestamp desc limit 1) as last_consult;";
 								// $query2 = $database->_dbQuery($patient_philhealth);
 								// $result2=$database->_dbFetch($query2);
 								$query2 = mysql_query($patient_philhealth);
@@ -216,6 +219,7 @@ $dbConnect = mysql_connect("mw2.wahlocal.ph","root","root");
 								}
 								echo "<td>$t </td>";
 							//}
+							echo "<td>" . $result2['last_consult'].'</td>';
 
 								
 							echo  "</tr>";
