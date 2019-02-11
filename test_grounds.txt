@@ -72,3 +72,10 @@ select
 		(select count(*) as ct from m_patient where (60 <= datediff(now(), patient_dob) / 365) and registration_date between date('$start_date') and date('$end_date') ) as '_60a',
 		(select count(*) as ct from m_patient where (60 <= datediff(now(), patient_dob) / 365) and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'F') as '_60af',
 		(select count(*) as ct from m_patient where (60 <= datediff(now(), patient_dob) / 365) and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'M') as '_60am'
+
+
+
+
+		select avg(1) as ct from consult group by date(created_at)
+
+		select avg(ct) as avg_registered from (select count(1) as ct from consult where created_at between date('$start_date') and date('$end_date')  group by date(created_at)) MyTable
