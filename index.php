@@ -329,7 +329,7 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 	(select count(*) as ct from patient where ((60 ) <= FLOOR((datediff(now(), birthdate)/365))) and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_60af',
 	(select count(*) as ct from patient where ((60 ) <= FLOOR((datediff(now(), birthdate)/365))) and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_60am',
 	
-	(select count(distinct(patient.id)) from patient_mc inner join patient on patient.id=patient_mc.patient_id where FLOOR((datediff(lmp_date, birthdate)/365)) < 18 and  date('lmp_date') between date('$start_date') and date('$end_date')) as 'total_preggy'
+	(select count(distinct(patient.id)) from patient_mc inner join patient on patient.id=patient_mc.patient_id where FLOOR((datediff(lmp_date, birthdate)/365)) < 18 and  date(lmp_date) between date('$start_date') and date('$end_date')) as 'total_preggy'
 	";
 	// $query2 = $database->_dbQuery($patient_philhealth);
 	// $result2=$database->_dbFetch($query2);
@@ -361,7 +361,7 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 		(select count(*) as ct from m_patient where ((60 ) <= FLOOR((datediff(now(), patient_dob)/365))) and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'F') as '_60af',
 		(select count(*) as ct from m_patient where ((60 ) <= FLOOR((datediff(now(), patient_dob)/365))) and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'M') as '_60am',
 		
-		(select count(distinct(m_patient.patient_id)) from m_patient_mc inner join m_patient on m_patient.patient_id=m_patient_mc.patient_id where FLOOR((datediff(patient_lmp, patient_dob)/365)) < 18 and  date('mc_consult_date') between date('$start_date') and date('$end_date')) as 'total_preggy'
+		(select count(distinct(m_patient.patient_id)) from m_patient_mc inner join m_patient on m_patient.patient_id=m_patient_mc.patient_id where FLOOR((datediff(patient_lmp, patient_dob)/365)) < 18 and  date(mc_consult_date) between date('$start_date') and date('$end_date')) as 'total_preggy'
 		";
 
 		//get all pregnant teenages
