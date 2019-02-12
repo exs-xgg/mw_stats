@@ -327,7 +327,10 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 	
 	(select count(*) as ct from patient where ((60 ) <= FLOOR((datediff(now(), birthdate)/365))) and created_at between date('$start_date') and date('$end_date') ) as '_60a',
 	(select count(*) as ct from patient where ((60 ) <= FLOOR((datediff(now(), birthdate)/365))) and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_60af',
-	(select count(*) as ct from patient where ((60 ) <= FLOOR((datediff(now(), birthdate)/365))) and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_60am'";
+	(select count(*) as ct from patient where ((60 ) <= FLOOR((datediff(now(), birthdate)/365))) and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_60am',
+	
+	(select count(distinct(patient.id)) from patient_mc inner join patient on patient.id=patient_mc.patient_id where FLOOR((datediff(lmp_date, birthdate)/365)) < 18 and  date('lmp_date') between date('$start_date') and date('$end_date')) as 'total_preggy'
+	";
 	// $query2 = $database->_dbQuery($patient_philhealth);
 	// $result2=$database->_dbFetch($query2);
 	//
@@ -356,7 +359,14 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 
 		(select count(*) as ct from m_patient where ((60 ) <= FLOOR((datediff(now(), patient_dob)/365))) and registration_date between date('$start_date') and date('$end_date') ) as '_60a',
 		(select count(*) as ct from m_patient where ((60 ) <= FLOOR((datediff(now(), patient_dob)/365))) and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'F') as '_60af',
-		(select count(*) as ct from m_patient where ((60 ) <= FLOOR((datediff(now(), patient_dob)/365))) and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'M') as '_60am'";
+		(select count(*) as ct from m_patient where ((60 ) <= FLOOR((datediff(now(), patient_dob)/365))) and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'M') as '_60am',
+		
+		(select count(distinct(m_patient.patient_id)) from m_patient_mc inner join m_patient on m_patient.patient_id=m_patient_mc.patient_id where FLOOR((datediff(patient_lmp, patient_dob)/365)) < 18 and  date('mc_consult_date') between date('$start_date') and date('$end_date')) as 'total_preggy'
+		";
+
+		//get all pregnant teenages
+		//select count(1) as ct, FLOOR((datediff(mc_consult_date, patient_dob)/365)) as age from m_patient_mc inner join m_patient on m_patient.patient_id=m_patient_mc.patient_id where FLOOR((datediff(now(), patient_dob)/365)) < 18 group by age
+
 		// $query2 = $database->_dbQuery($patient_philhealth);
 		// $result2=$database->_dbFetch($query2);
 		$query2 = mysql_query($patient_philhealth);
@@ -394,7 +404,7 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 	$_60af=$result2['_60af'];
 	$_60am=$result2['_60am'];
 
-	
+	$total_preggy=$result2['total_preggy'];	
 }
 
 ?>
@@ -447,6 +457,10 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 					<td colspan="2"><?php echo $_5b + $_6to17 + $_18to35 + $_36to59 + $_60a; ?></td>
 				</tr>
 			</table>
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-danger">PREGNANT TEENAGERS REGISTERED</div></div>
+				<h1 align="center"><?php echo $total_preggy; ?></h1>
+			</div>
 			<button class="btn btn-success" onclick="phic()">Generate Invalid Philhealth</button> <button class="btn btn-primary" onclick="cell()">Generate Invalid Numbers</button>
 	</div>
 </body>
