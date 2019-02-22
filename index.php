@@ -541,7 +541,7 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 				<tbody>
 					<tr><th>CN</th><td><?php echo $cn_f;  ?></td><td><?php echo $cn_m;  ?></td><td><?php echo $cn_m + $cn_t;  ?></td></tr>
 					<tr><th>DN</th><td><?php echo $dn_f;  ?></td><td><?php echo $dn_m;  ?></td><td><?php echo $dn_m + $dn_f;  ?></td></tr>
-					<tr><th>MC</th><td><?php echo $mc_f;  ?></td><td><?php echo "N/A";  ?></td><td><?php echo $mc_m;  ?></td></tr>
+					<tr><th>MC</th><td><?php echo $mc_f;  ?></td><td><?php echo "N/A";  ?></td><td><?php echo $mc_f;  ?></td></tr>
 					<tr><th>CC</th><td><?php echo $cc_f;  ?></td><td><?php echo $cc_m;  ?></td><td><?php echo $cc_m + $cc_f;  ?></td></tr>
 					<tr><th>NCD</th><td><?php echo $nc_f;  ?></td><td><?php echo $nc_m;  ?></td><td><?php echo $nc_m + $nc_f;  ?></td></tr>
 					<tr><th>TB</th><td><?php echo $tb_f;  ?></td><td><?php echo $tb_m;  ?></td><td><?php echo $tb_m + $tb_f;  ?></td></tr>
