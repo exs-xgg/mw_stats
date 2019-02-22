@@ -327,10 +327,13 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 	
 	(select count(*) as ct from patient where ((60 ) <= FLOOR((datediff(now(), birthdate)/365))) and created_at between date('$start_date') and date('$end_date') ) as '_60a',
 	(select count(*) as ct from patient where ((60 ) <= FLOOR((datediff(now(), birthdate)/365))) and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_60af',
-	(select count(*) as ct from patient where ((60 ) <= FLOOR((datediff(now(), birthdate)/365))) and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_60am',
+	(select count(*) as ct from patient where ((60 ) <= FLOOR((datediff(now(), birthdate)/365))) and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_60am'
 	
 	(select count(distinct(patient.id)) from patient_mc inner join patient on patient.id=patient_mc.patient_id where FLOOR((datediff(lmp_date, birthdate)/365)) < 20 and  date(lmp_date) between date('$start_date') and date('$end_date')) as 'total_preggy'
 	";
+	/**
+	 *  
+	 */
 	// $query2 = $database->_dbQuery($patient_philhealth);
 	// $result2=$database->_dbFetch($query2);
 	//
@@ -403,8 +406,6 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 	$_60a=$result2['_60a'];
 	$_60af=$result2['_60af'];
 	$_60am=$result2['_60am'];
-
-	$total_preggy=$result2['total_preggy'];	
 }
 
 ?>
@@ -457,9 +458,127 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 					<td colspan="2"><?php echo $_5b + $_6to17 + $_18to35 + $_36to59 + $_60a; ?></td>
 				</tr>
 			</table>
+<br>
 			<div class="row">
-				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-danger">PREGNANT TEENAGERS REGISTERED</div></div>
-				<h1 align="center"><?php echo $total_preggy; ?></h1>
+				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-success">Consultation Breakdown (MW only)</div></div>
+			</div>
+
+			<?php
+if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
+{ 
+	//MISUWAH
+	$patient_philhealth = "
+	select
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='cn' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as cn_f,
+		
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='cn' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as cn_m,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='tb' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as tb_f,
+		
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='tb' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as tb_m,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='mc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as mc_f,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='mc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as mc_m,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='cc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as cc_f,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='cc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as cc_m,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='fp' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as fp_f,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='fp' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as fp_m,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='dn' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as dn_f,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='dn' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as dn_m,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='nc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as nc_f,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='nc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as nc_m,	
+
+	(select count(*) from consult_laboratory c inner join patient p on p.id=c.patient_id where p.gender='M' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as lab_m,
+
+	(select count(*) from consult_laboratory c inner join patient p on p.id=c.patient_id where p.gender='F' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as lab_f
+	";
+	/**
+	 *  
+	 */
+	// $query2 = $database->_dbQuery($patient_philhealth);
+	// $result2=$database->_dbFetch($query2);
+	//
+	$query2 = mysql_query($patient_philhealth);
+	$total2 = mysql_num_rows($query2);
+	
+
+
+	$t="";
+	$result2= mysql_fetch_array($query2);
+	$cn_m = $result2['cn_m'];
+	$cn_f = $result2['cn_f'];
+	$dn_m = $result2['dn_m'];
+	$dn_f = $result2['dn_f'];
+	$mc_m = $result2['mc_m'];
+	$mc_f = $result2['mc_f'];
+	$cc_m = $result2['cc_m'];
+	$cc_f = $result2['cc_f'];
+	$nc_m = $result2['nc_m'];
+	$nc_f = $result2['nc_f'];
+	$tb_m = $result2['tb_m'];
+	$tb_f = $result2['tb_f'];
+	$fp_m = $result2['fp_m'];
+	$fp_f = $result2['fp_f'];
+	$lab_m = $result2['lab_m'];
+	$lab_f = $result2['lab_f'];
+	
+}
+
+?>
+			<table class="taable" align="center">
+				<thead>
+					<tr><th>Category</th><th>Female</th><th>Male</th><th>Total</th></tr>
+				</thead>
+				<tbody>
+					<tr><th>CN</th><td><?php echo $cn_f;  ?></td><td><?php echo $cn_m;  ?></td><td><?php echo $cn_m + $cn_t;  ?></td></tr>
+					<tr><th>DN</th><td><?php echo $dn_f;  ?></td><td><?php echo $dn_m;  ?></td><td><?php echo $dn_m + $dn_f;  ?></td></tr>
+					<tr><th>MC</th><td><?php echo $mc_f;  ?></td><td><?php echo "N/A";  ?></td><td><?php echo $mc_m;  ?></td></tr>
+					<tr><th>CC</th><td><?php echo $cc_f;  ?></td><td><?php echo $cc_m;  ?></td><td><?php echo $cc_m + $cc_f;  ?></td></tr>
+					<tr><th>NCD</th><td><?php echo $nc_f;  ?></td><td><?php echo $nc_m;  ?></td><td><?php echo $nc_m + $nc_f;  ?></td></tr>
+					<tr><th>TB</th><td><?php echo $tb_f;  ?></td><td><?php echo $tb_m;  ?></td><td><?php echo $tb_m + $tb_f;  ?></td></tr>
+					<tr><th>FP</th><td><?php echo $fp_f;  ?></td><td><?php echo $fp_m;  ?></td><td><?php echo $fp_m + $fp_f;  ?></td></tr>
+					<tr><th>LAB</th><td><?php echo $lab_m;  ?></td><td><?php echo $lab_f;  ?></td><td><?php echo $lab_m + $lab_f;  ?>t</td></tr>
+				</tbody>
+			</table>
+			<div class="row">
+				<div class="col-12 text-center"><div class="alert alert-danger">PREGNANT TEENAGERS REGISTERED</div></div>
+				<h1 class="text=center" align="center"><?php 
+				if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
+				{ 
+					//MISUWAH	
+					$patient_philhealth = "
+					select	
+					(select count(distinct(patient.id)) from patient_mc inner join patient on patient.id=patient_mc.patient_id where FLOOR((datediff(lmp_date, birthdate)/365)) < 18 and  date(lmp_date) between date('$start_date') and date('$end_date')) as 'total_preggy'	";
+
+					$query2 = mysql_query($patient_philhealth);
+					$total2 = mysql_num_rows($query2);
+					
+				
+					//WAFFLE
+					if ($total2 == 0) {
+
+						$patient_philhealth = "
+						select	
+						(select count(distinct(m_patient.patient_id)) from m_patient_mc inner join m_patient on m_patient.patient_id=m_patient_mc.patient_id where FLOOR((datediff(patient_lmp, patient_dob)/365)) < 18 and  date(mc_consult_date) between date('$start_date') and date('$end_date')) as 'total_preggy'";
+						
+						$query2 = mysql_query($patient_philhealth);
+						$total2 = mysql_num_rows($query2);
+					}
+
+				$result2= mysql_fetch_array($query2);
+				$total_preggy=$result2['total_preggy'];	
+				
+				echo $total_preggy;
+				} ?></h1>
 			</div>
 			<button class="btn btn-success" onclick="phic()">Generate Invalid Philhealth</button> <button class="btn btn-primary" onclick="cell()">Generate Invalid Numbers</button>
 	</div>

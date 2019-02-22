@@ -23,26 +23,26 @@ Array (
 [14] => 21 [_60am] => 21 ) 
 
 select 
-		(select count(*) as ct from patient where (TIMESTAMPDIFF(year,birthdate, now()) <= (5 * 365) and created_at between date('$start_date') and date('$end_date') ) as '_5b',
-		(select count(*) as ct from patient where (TIMESTAMPDIFF(year,birthdate, now()) <= (5 * 365) and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_5bm',
-		(select count(*) as ct from patient where (TIMESTAMPDIFF(year,birthdate, now()) <= (5 * 365) and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_5bf',
+		(select count(*) as ct from patient where (TIMESTAMPDIFF(year,birthdate, now()) <= (5 * 365)] ) as '_5b',
+		(select count(*) as ct from patient where (TIMESTAMPDIFF(year,birthdate, now()) <= (5 * 365)] and gender like 'M') as '_5bm',
+		(select count(*) as ct from patient where (TIMESTAMPDIFF(year,birthdate, now()) <= (5 * 365)] and gender like 'F') as '_5bf',
 	
-		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (6 * 365) and (17 * 365)) and created_at between date('$start_date') and date('$end_date')) as '_6to17',
-		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (6 * 365) and (17 * 365)) and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_6to17m',
-		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (6 * 365) and (17 * 365)) and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_6to17f',
+		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (6 * 365) and (17 * 365))]) as '_6to17',
+		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (6 * 365) and (17 * 365))] and gender like 'M') as '_6to17m',
+		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (6 * 365) and (17 * 365))] and gender like 'F') as '_6to17f',
 	
 	
-		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (18 * 365) and (35 * 365))  and created_at between date('$start_date') and date('$end_date') ) as '_18to35',
-		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (18 * 365) and (35 * 365))  and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_18to35m',
-		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (18 * 365) and (35 * 365))  and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_18to35f',
+		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (18 * 365) and (35 * 365)) ] ) as '_18to35',
+		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (18 * 365) and (35 * 365)) ] and gender like 'M') as '_18to35m',
+		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (18 * 365) and (35 * 365)) ] and gender like 'F') as '_18to35f',
 		
-		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (36 * 365) and (59 * 365))  and created_at between date('$start_date') and date('$end_date') ) as '_36to59',
-		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (36 * 365) and (59 * 365))  and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_36to59m',
-		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (36 * 365) and (59 * 365))  and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_36to59f',
+		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (36 * 365) and (59 * 365)) ] ) as '_36to59',
+		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (36 * 365) and (59 * 365)) ] and gender like 'M') as '_36to59m',
+		(select count(*) as ct from patient where ((TIMESTAMPDIFF(year,birthdate, now()) between (36 * 365) and (59 * 365)) ] and gender like 'F') as '_36to59f',
 		
-		(select count(*) as ct from patient where ((60 * 365) <= (TIMESTAMPDIFF(year,birthdate, now())) and created_at between date('$start_date') and date('$end_date') ) as '_60a',
-		(select count(*) as ct from patient where ((60 * 365) <= (TIMESTAMPDIFF(year,birthdate, now())) and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_60af',
-		(select count(*) as ct from patient where ((60 * 365) <= (TIMESTAMPDIFF(year,birthdate, now())) and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_60am'
+		(select count(*) as ct from patient where ((60 * 365) <= (TIMESTAMPDIFF(year,birthdate, now()))] ) as '_60a',
+		(select count(*) as ct from patient where ((60 * 365) <= (TIMESTAMPDIFF(year,birthdate, now()))] and gender like 'F') as '_60af',
+		(select count(*) as ct from patient where ((60 * 365) <= (TIMESTAMPDIFF(year,birthdate, now()))] and gender like 'M') as '_60am'
 
 
 
@@ -135,26 +135,26 @@ select
 
 
 		select 
-	(select count(*) as ct from patient where CEILING((datediff(now(), birthdate)/365)) <= (5 ) and created_at between date('$start_date') and date('$end_date') ) as '_5b',
-	(select count(*) as ct from patient where CEILING((datediff(now(), birthdate)/365)) <= (5 ) and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_5bm',
-	(select count(*) as ct from patient where CEILING((datediff(now(), birthdate)/365)) <= (5 ) and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_5bf',
+	(select count(*) as ct from patient where CEILING((datediff(now(), birthdate)/365)) <= (5 )  ) as '_5b',
+	(select count(*) as ct from patient where CEILING((datediff(now(), birthdate)/365)) <= (5 )  and gender like 'M') as '_5bm',
+	(select count(*) as ct from patient where CEILING((datediff(now(), birthdate)/365)) <= (5 )  and gender like 'F') as '_5bf',
 
-	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (6 ) and (17 )) and created_at between date('$start_date') and date('$end_date')) as '_6to17',
-	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (6 ) and (17 )) and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_6to17m',
-	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (6 ) and (17 )) and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_6to17f',
+	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (6 ) and (17 )) ) as '_6to17',
+	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (6 ) and (17 ))  and gender like 'M') as '_6to17m',
+	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (6 ) and (17 ))  and gender like 'F') as '_6to17f',
 
 
-	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (18 ) and (35 ))  and created_at between date('$start_date') and date('$end_date') ) as '_18to35',
-	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (18 ) and (35 ))  and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_18to35m',
-	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (18 ) and (35 ))  and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_18to35f',
+	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (18 ) and (35 ))   ) as '_18to35',
+	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (18 ) and (35 ))   and gender like 'M') as '_18to35m',
+	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (18 ) and (35 ))   and gender like 'F') as '_18to35f',
 	
-	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (36 ) and (59 ))  and created_at between date('$start_date') and date('$end_date') ) as '_36to59',
-	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (36 ) and (59 ))  and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_36to59m',
-	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (36 ) and (59 ))  and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_36to59f',
+	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (36 ) and (59 ))   ) as '_36to59',
+	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (36 ) and (59 ))   and gender like 'M') as '_36to59m',
+	(select count(*) as ct from patient where (CEILING((datediff(now(), birthdate)/365)) between (36 ) and (59 ))   and gender like 'F') as '_36to59f',
 	
-	(select count(*) as ct from patient where ((60 ) <= CEILING((datediff(now(), birthdate)/365))) and created_at between date('$start_date') and date('$end_date') ) as '_60a',
-	(select count(*) as ct from patient where ((60 ) <= CEILING((datediff(now(), birthdate)/365))) and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_60af',
-	(select count(*) as ct from patient where ((60 ) <= CEILING((datediff(now(), birthdate)/365))) and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_60am'
+	(select count(*) as ct from patient where ((60 ) <= CEILING((datediff(now(), birthdate)/365)))  ) as '_60a',
+	(select count(*) as ct from patient where ((60 ) <= CEILING((datediff(now(), birthdate)/365)))  and gender like 'F') as '_60af',
+	(select count(*) as ct from patient where ((60 ) <= CEILING((datediff(now(), birthdate)/365)))  and gender like 'M') as '_60am'
 
 
 
@@ -179,3 +179,40 @@ select
 		(select count(*) as ct from m_patient where ((60 ) <= CEILING((datediff(now(), patient_dob)/365))) and registration_date between date('$start_date') and date('$end_date') ) as '_60a',
 		(select count(*) as ct from m_patient where ((60 ) <= CEILING((datediff(now(), patient_dob)/365))) and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'F') as '_60af',
 		(select count(*) as ct from m_patient where ((60 ) <= CEILING((datediff(now(), patient_dob)/365))) and registration_date between date('$start_date') and date('$end_date') and patient_gender like 'M') as '_60am'
+
+
+
+
+
+select
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='cn' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as cn_f,
+		
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='cn' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as cn_m,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='tb' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as tb_f,
+		
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='tb' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as tb_m,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='mc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as mc_f,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='mc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as mc_m,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='cc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as cc_f,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='cc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as cc_m,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='fp' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as fp_f,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='fp' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as fp_m,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='dn' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as dn_f,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='dn' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as dn_m,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='nc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as nc_f,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='nc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as nc_m,	
+
+	(select count(*) from consult_laboratory c inner join patient p on p.id=c.patient_id where p.gender='M' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as lab_m,
+
+	(select count(*) from consult_laboratory c inner join patient p on p.id=c.patient_id where p.gender='F' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as lab_f
