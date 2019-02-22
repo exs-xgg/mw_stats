@@ -546,7 +546,7 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 					<tr><th>NCD</th><td><?php echo $nc_f;  ?></td><td><?php echo $nc_m;  ?></td><td><?php echo $nc_m + $nc_f;  ?></td></tr>
 					<tr><th>TB</th><td><?php echo $tb_f;  ?></td><td><?php echo $tb_m;  ?></td><td><?php echo $tb_m + $tb_f;  ?></td></tr>
 					<tr><th>FP</th><td><?php echo $fp_f;  ?></td><td><?php echo $fp_m;  ?></td><td><?php echo $fp_m + $fp_f;  ?></td></tr>
-					<tr><th>LAB</th><td><?php echo $lab_m;  ?></td><td><?php echo $lab_f;  ?></td><td><?php echo $lab_m + $lab_f;  ?>t</td></tr>
+					<tr><th>LAB</th><td><?php echo $lab_m;  ?></td><td><?php echo $lab_f;  ?></td><td><?php echo $lab_m + $lab_f;  ?></td></tr>
 				</tbody>
 			</table>
 			<div class="row">
