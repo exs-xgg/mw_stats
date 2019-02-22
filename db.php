@@ -2,7 +2,8 @@
 
 
 $dbarray = array(
-  "hf_real1" => "hf_real1",
+
+  "hf_real1" => "capas1",
  "hf_paniqui2" => "hf_paniqui2",
   "hf_moncada1" => "hf_moncada1",
 "hf_ipil1" => "hf_ipil1",
