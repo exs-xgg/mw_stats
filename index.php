@@ -497,6 +497,10 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 
 	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='nc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as nc_m,	
 
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='ab' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as ab_f,
+
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='ab' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as ab_m,	
+
 	(select count(*) from consult_laboratory c inner join patient p on p.id=c.patient_id where p.gender='M' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as lab_m,
 
 	(select count(*) from consult_laboratory c inner join patient p on p.id=c.patient_id where p.gender='F' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as lab_f
@@ -524,6 +528,8 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 	$cc_f = $result2['cc_f'];
 	$nc_m = $result2['nc_m'];
 	$nc_f = $result2['nc_f'];
+	$ab_m = $result2['ab_m'];
+	$ab_f = $result2['ab_f'];
 	$tb_m = $result2['tb_m'];
 	$tb_f = $result2['tb_f'];
 	$fp_m = $result2['fp_m'];
@@ -546,6 +552,7 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 					<tr><th>NCD</th><td><?php echo $nc_f;  ?></td><td><?php echo $nc_m;  ?></td><td><?php echo $nc_m + $nc_f;  ?></td></tr>
 					<tr><th>TB</th><td><?php echo $tb_f;  ?></td><td><?php echo $tb_m;  ?></td><td><?php echo $tb_m + $tb_f;  ?></td></tr>
 					<tr><th>FP</th><td><?php echo $fp_f;  ?></td><td><?php echo $fp_m;  ?></td><td><?php echo $fp_m + $fp_f;  ?></td></tr>
+					<tr><th>AB</th><td><?php echo $ab_f;  ?></td><td><?php echo $ab_m;  ?></td><td><?php echo $ab_m + $ab_f;  ?></td></tr>
 					<tr><th>LAB</th><td><?php echo $lab_m;  ?></td><td><?php echo $lab_f;  ?></td><td><?php echo $lab_m + $lab_f;  ?></td></tr>
 				</tbody>
 			</table>
