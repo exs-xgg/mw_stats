@@ -545,7 +545,7 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 					<tr><th>Category</th><th>Female</th><th>Male</th><th>Total</th></tr>
 				</thead>
 				<tbody>
-					<tr><th>Consult Notes</th><td><?php echo $cn_f;  ?></td><td><?php echo $cn_m;  ?></td><td><?php echo $cn_m + $cn_t;  ?></td></tr>
+					<tr><th>Consult Notes</th><td><?php echo $cn_f;  ?></td><td><?php echo $cn_m;  ?></td><td><?php echo $cn_m + $cn_f;  ?></td></tr>
 					<tr><th>Dental</th><td><?php echo $dn_f;  ?></td><td><?php echo $dn_m;  ?></td><td><?php echo $dn_m + $dn_f;  ?></td></tr>
 					<tr><th>Maternal Care</th><td><?php echo $mc_f;  ?></td><td><?php echo "N/A";  ?></td><td><?php echo $mc_f;  ?></td></tr>
 					<tr><th>Child Care</th><td><?php echo $cc_f;  ?></td><td><?php echo $cc_m;  ?></td><td><?php echo $cc_m + $cc_f;  ?></td></tr>
