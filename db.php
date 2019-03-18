@@ -2,7 +2,7 @@
 
 
 $dbarray = array(
-
+"hf_delcarmen1" => "hf_delcarmen1",
   "hf_real1" => "capas1",
  "hf_paniqui2" => "hf_paniqui2",
   "hf_moncada1" => "hf_moncada1",
@@ -117,8 +117,8 @@ $dbarray = array(
 "hf_sanclemente1" => "hf_sanclemente1",
 "hf_sanildefonso1" => "hf_sanildefonso1",
 "hf_sanjacinto1" => "hf_sanjacinto1",
-"hf_sanjose1" => "hf_sanjose1",
-"hf_sanmanuel1" => "hf_sanmanuel1",
+"hf_sanjosemindoro1" => "hf_sanjosemindoro1",
+"hf_sanmanueltarlac1" => "hf_sanmanueltarlac1",
 "hf_sanmiguel1" => "hf_sanmiguel1",
 "hf_sannicolas1" => "hf_sannicolas1",
 "hf_sanquintin1" => "hf_sanquintin1",

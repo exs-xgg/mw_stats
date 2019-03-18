@@ -329,11 +329,9 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 	(select count(*) as ct from patient where ((60 ) <= FLOOR((datediff(now(), birthdate)/365))) and created_at between date('$start_date') and date('$end_date') and gender like 'F') as '_60af',
 	(select count(*) as ct from patient where ((60 ) <= FLOOR((datediff(now(), birthdate)/365))) and created_at between date('$start_date') and date('$end_date') and gender like 'M') as '_60am'
 	
-	(select count(distinct(patient.id)) from patient_mc inner join patient on patient.id=patient_mc.patient_id where FLOOR((datediff(lmp_date, birthdate)/365)) < 20 and  date(lmp_date) between date('$start_date') and date('$end_date')) as 'total_preggy'
+--	(select count(distinct(patient.id)) from patient_mc inner join patient on patient.id=patient_mc.patient_id where FLOOR((datediff(lmp_date, birthdate)/365)) < 20 and  date(lmp_date) between date('$start_date') and date('$end_date')) as 'total_preggy'
 	";
-	/**
-	 *  
-	 */
+	
 	// $query2 = $database->_dbQuery($patient_philhealth);
 	// $result2=$database->_dbFetch($query2);
 	//
@@ -505,12 +503,7 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 
 	(select count(*) from consult_laboratory c inner join patient p on p.id=c.patient_id where p.gender='F' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as lab_f
 	";
-	/**
-	 *  
-	 */
-	// $query2 = $database->_dbQuery($patient_philhealth);
-	// $result2=$database->_dbFetch($query2);
-	//
+	
 	$query2 = mysql_query($patient_philhealth);
 	$total2 = mysql_num_rows($query2);
 	
