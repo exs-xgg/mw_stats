@@ -108,7 +108,7 @@
 			<table class='table'>
 				<thead>
 					<tr>
-						<th>NHTS Members Registered*</th>
+						<th>PHIC Members Registered* (NHTS vs Formal)</th>
 						<th>PhilHealth Member Count*</th>
 						<th>PhilHealth Dependent Count*</th>
 						<th>PhilHealth Count*</th>
