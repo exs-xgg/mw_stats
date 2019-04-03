@@ -1,5 +1,5 @@
 <?php
-	error_reporting(E_ERROR | E_PARSE);
+	// error_reporting(E_ERROR | E_PARSE);
 	require_once 'db.php';
 	// $dbHost = "localhost";
 	// $dbUser = "root";
@@ -14,12 +14,7 @@
 	}
 
 
-<<<<<<< HEAD
-
-							$dbConnect = mysql_connect("localhost","root","");
-=======
-$dbConnect = mysql_connect("mw2.wahlocal.ph","root","root");
->>>>>>> 41d2824a07411bae0a7505afbabffd9ab7792a79
+	$dbConnect = mysql_connect("192.168.100.11","root","root");
 ?>
 <html>
 <head>
