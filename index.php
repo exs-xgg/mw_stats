@@ -1,5 +1,5 @@
 <?php
-	// error_reporting(E_ERROR | E_PARSE);
+	error_reporting(E_ERROR | E_PARSE);
 	require_once 'db.php';
 	// $dbHost = "localhost";
 	// $dbUser = "root";
@@ -8,7 +8,7 @@
 
 
 
-							$dbConnect = mysql_connect("localhost","root","root");
+							$dbConnect = mysql_connect("localhost","root","");
 ?>
 <html>
 <head>
@@ -65,7 +65,7 @@
 							$dbName = $_POST['rhu'];
 							$_SESSION['rhu'] = $dbName;
 
-							mysql_select_db($dbName,$dbConnect);
+							mysql_select_db("aguilar",$dbConnect);
 
 							$patientCount = "SELECT ( SELECT count(*) FROM patient where created_at between date('$start_date') and date('$end_date')) as patient,
 							( SELECT count(*) FROM consult where created_at between date('$start_date') and date('$end_date')) as consult,
@@ -116,7 +116,7 @@
 						if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 						{ 
 
-							$patient_philhealth = "SELECT (SELECT count(*) FROM patient_philhealth WHERE member_cat_id ='18') AS nhts,
+							$patient_philhealth = "SELECT concat(concat((SELECT count(*) FROM patient_philhealth WHERE member_cat_id ='18'),'/'),(SELECT count(*) FROM patient_philhealth WHERE member_cat_id <= 9)) AS nhts,
 							(SELECT count(*) FROM patient_philhealth WHERE member_id ='MM') AS member,
 							(SELECT count(*) FROM patient_philhealth WHERE member_id ='DD') AS dependent,
 							(SELECT count(*) FROM patient_philhealth) AS patient_philhealth,
