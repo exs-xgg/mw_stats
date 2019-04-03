@@ -133,7 +133,14 @@
 							$total2 = mysql_num_rows($query2);
 							
 							if ($total2 == 0) {
-								$patient_philhealth = "SELECT (SELECT count(*) FROM m_patient_philhealth WHERE member_cat_id ='18') AS nhts,
+								$patient_philhealth = "SELECT 
+								
+								
+								(SELECT count(*) FROM m_patient_philhealth WHERE member_cat_id ='18') 
+								
+								concat(concat((SELECT count(*) FROM m_patient_philhealth WHERE member_cat_id ='18'),'/'),(SELECT count(*) FROM m_patient_philhealth WHERE member_cat_id <= 9))
+								
+								AS nhts,
 							(SELECT count(*) FROM m_patient_philhealth WHERE member_id ='MM') AS member,
 							(SELECT count(*) FROM m_patient_philhealth WHERE member_id ='DD') AS dependent,
 							(SELECT count(*) FROM m_patient_philhealth) AS patient_philhealth,
