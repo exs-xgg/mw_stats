@@ -1,5 +1,5 @@
 <?php
-	// error_reporting(E_ERROR | E_PARSE);
+	error_reporting(E_ERROR | E_PARSE);
 	require_once 'db.php';
 	// $dbHost = "localhost";
 	// $dbUser = "root";
@@ -69,7 +69,7 @@
 							$dbName = $_POST['rhu'];
 							$_SESSION['rhu'] = $dbName;
 
-							mysql_select_db("aguilar",$dbConnect);
+							mysql_select_db($dbName,$dbConnect);
 
 							$patientCount = "SELECT ( SELECT count(*) FROM patient where created_at between date('$start_date') and date('$end_date')) as patient,
 							( SELECT count(*) FROM consult where created_at between date('$start_date') and date('$end_date')) as consult,
