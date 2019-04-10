@@ -14,7 +14,7 @@
 	}
 
 
-$dbConnect = mysql_connect("localhost","root","root");
+	$dbConnect = mysql_connect("192.168.100.11","root","root");
 ?>
 <html>
 <head>
@@ -108,7 +108,7 @@ $dbConnect = mysql_connect("localhost","root","root");
 			<table class='table'>
 				<thead>
 					<tr>
-						<th>NHTS Members Registered*</th>
+						<th>PHIC Members Registered* (NHTS vs Formal)</th>
 						<th>PhilHealth Member Count*</th>
 						<th>PhilHealth Dependent Count*</th>
 						<th>PhilHealth Count*</th>
@@ -120,7 +120,7 @@ $dbConnect = mysql_connect("localhost","root","root");
 						if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 						{ 
 
-							$patient_philhealth = "SELECT (SELECT count(*) FROM patient_philhealth WHERE member_cat_id ='18') AS nhts,
+							$patient_philhealth = "SELECT concat(concat((SELECT count(*) FROM patient_philhealth WHERE member_cat_id ='18'),'/'),(SELECT count(*) FROM patient_philhealth WHERE member_cat_id <= 9)) AS nhts,
 							(SELECT count(*) FROM patient_philhealth WHERE member_id ='MM') AS member,
 							(SELECT count(*) FROM patient_philhealth WHERE member_id ='DD') AS dependent,
 							(SELECT count(*) FROM patient_philhealth) AS patient_philhealth,
@@ -133,7 +133,9 @@ $dbConnect = mysql_connect("localhost","root","root");
 							$total2 = mysql_num_rows($query2);
 							
 							if ($total2 == 0) {
-								$patient_philhealth = "SELECT (SELECT count(*) FROM m_patient_philhealth WHERE member_cat_id ='18') AS nhts,
+								$patient_philhealth = "SELECT concat(concat((SELECT count(*) FROM m_patient_philhealth WHERE member_cat_id ='18'),'/'),(SELECT count(*) FROM m_patient_philhealth WHERE member_cat_id <= 9))
+								
+								AS nhts,
 							(SELECT count(*) FROM m_patient_philhealth WHERE member_id ='MM') AS member,
 							(SELECT count(*) FROM m_patient_philhealth WHERE member_id ='DD') AS dependent,
 							(SELECT count(*) FROM m_patient_philhealth) AS patient_philhealth,
