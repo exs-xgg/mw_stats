@@ -36,7 +36,7 @@ th, td {
 </div>
 <table class="table table-striped">
 	<thead>
-		<tr><th>Site</th><th>Patients Registered</th><th>Patients(M) Registered</th><th>Patients(F) Registered</th><th>Consults Registered</th><th>Patients Served Daily</th>
+		<tr><th>Site</th><th>Patients Registered</th><th>Patients(M) Registered</th><th>Patients(F) Registered</th><th>Consults Registered</th><th>Patients Served Daily</th><th>Date of Last Consult</th>
 		</tr>
 	</thead>
 <?php
@@ -56,14 +56,16 @@ $totalServedDaily = 0;
 
 
 foreach ($dbarray as $key => $value) {
-	//DB CONNECTOR
+	//DB CONNECTOR 
 	$conn = mysqli_connect("mw2.wahlocal.ph","root","root",$value);
 	$test = $conn->query("select * from patient");
 	$is_misuwah = $test->num_rows;
 	if($is_misuwah > 0){
 		$query_string = "SELECT ( SELECT count(*) FROM patient where created_at between date('$start_date') and date('$end_date')) as patient,
 
-								( SELECT count(*) FROM consult where created_at between date('$start_date') and date('$end_date')) as consult,
+		( SELECT count(*) FROM consult where created_at between date('$start_date') and date('$end_date')) as consult,
+
+( SELECT date(created_at) FROM consult order by created_at desc limit 1) as last_date,
 
 								(select count(*) as ct from patient where created_at between date('$start_date') and date('$end_date') and gender like 'F') as 'patient_f',
 
@@ -73,7 +75,8 @@ foreach ($dbarray as $key => $value) {
 	}else{
 		$query_string = "SELECT ( SELECT count(*) FROM m_patient where registration_date between date('$start_date') and date('$end_date')) as patient,
 
-								( SELECT count(*) FROM m_consult where consult_date between date('$start_date') and date('$end_date')) as consult,
+( SELECT count(*) FROM m_consult where consult_date between date('$start_date') and date('$end_date')) as consult,
+( SELECT date(`consult_timestamp`) FROM m_consult order by `consult_timestamp` desc limit 1) as last_date,
 
 								(select count(*) as ct from m_patient where registration_date between date('$start_date') and date('$end_date')  and patient_gender like 'M') as 'patient_f',
 
@@ -92,6 +95,8 @@ foreach ($dbarray as $key => $value) {
 		echo "<td>" . $result_array['patient_f'] . '</td>';
 		echo "<td>" . $result_array['consult'] . '</td>';
 		echo "<td>" . $result_array['avg_registered'] . '</td>';
+		echo "<td>" . $result_array['last_date'] . '</td>';
+	
 		$totalPatientRegistered += $result_array['patient'];
 		$totalPatientRegistered_M += $result_array['patient_m'];
 		$totalPatientRegistered_F += $result_array['patient_f'];

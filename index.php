@@ -14,7 +14,7 @@
 	}
 
 
-$dbConnect = mysql_connect("mw2.wahlocal.ph","root","root");
+$dbConnect = mysql_connect("localhost","root","root");
 ?>
 <html>
 <head>
