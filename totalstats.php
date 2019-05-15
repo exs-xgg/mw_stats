@@ -26,7 +26,7 @@ th, td {
 					</thead>
 					<tbody>
 						<tr>
-							<td id="pt_reg">Patients Registered</td><td id="pt_reg_m">Patients(M) Registered</td><td id="pt_reg_f">Patients(F) Registered</td><td id="cons_reg">Consults Registered</td><td id="pt_reg_avg">Patients Served Daily</td>
+						<td id="pt_reg">Patients Registered</td><td>Invalid Numbers</td><td id="pt_reg_m">Patients(M) Registered</td><td id="pt_reg_f">Patients(F) Registered</td><td id="cons_reg">Consults Registered</td><td id="pt_reg_avg">Patients Served Daily</td>
 						</tr>
 					</tbody>
 				</table>
@@ -68,7 +68,7 @@ foreach ($dbarray as $key => $value) {
 								(select count(*) as ct from patient where created_at between date('$start_date') and date('$end_date') and gender like 'F') as 'patient_f',
 
 								(select count(*) as ct from patient where created_at between date('$start_date') and date('$end_date') and gender like 'M') as 'patient_m',
-
+								(SELECT count(*) FROM patient WHERE mobile_number = '0000000000' or length(mobile_number) != 10 or mobile_number = '1111111111' or mobile_number='9000000000') AS invalid_phone,
 								(select avg(ct) as avg_registered from (select count(1) as ct from consult where created_at between date('$start_date') and date('$end_date')  group by date(created_at)) MyTable) as avg_registered";
 	}else{
 		$query_string = "SELECT ( SELECT count(*) FROM m_patient where registration_date between date('$start_date') and date('$end_date')) as patient,
@@ -76,7 +76,7 @@ foreach ($dbarray as $key => $value) {
 								( SELECT count(*) FROM m_consult where consult_date between date('$start_date') and date('$end_date')) as consult,
 
 								(select count(*) as ct from m_patient where registration_date between date('$start_date') and date('$end_date')  and patient_gender like 'M') as 'patient_f',
-
+								(SELECT count(*) FROM m_patient WHERE patient_cellphone = '0000000000' or length(patient_cellphone) != 11 or patient_cellphone = '1111111111' or patient_cellphone='9000000000') AS invalid_phone,
 								(select count(*) as ct from m_patient where registration_date between date('$start_date') and date('$end_date')  and patient_gender like 'F') as 'patient_m',
 
 								select (select avg(ct) as avg_registered from (select count(1) as ct from m_consult where consult_timestamp between date('2018-01-01') and date('2018-12-13')  group by date(consult_timestamp)) MyTable) as avg_registered";
@@ -88,6 +88,7 @@ foreach ($dbarray as $key => $value) {
 		echo "<tr>";
 		echo "<td>$value</td>";
 		echo "<td>" . $result_array['patient'] . '</td>';
+		echo "<td>" . $result_array['invalid_phone'] . '</td>';
 		echo "<td>" . $result_array['patient_m'] . '</td>';
 		echo "<td>" . $result_array['patient_f'] . '</td>';
 		echo "<td>" . $result_array['consult'] . '</td>';
