@@ -21,12 +21,12 @@ th, td {
 				<table class="table">
 					<thead>
 						<tr>
-							<th>Patients Registered</th><td>Invalid Numbers</td><th>Patients(M) Registered</th><th>Patients(F) Registered</th><th>Consults Registered</th><th>Patients Served Daily</th>
+							<th>Patients Registered</th><th>Patients(M) Registered</th><th>Patients(F) Registered</th><th>Consults Registered</th><th>Patients Served Daily</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-						<td id="pt_reg">Patients Registered</td><td>Invalid Numbers</td><td id="pt_reg_m">Patients(M) Registered</td><td id="pt_reg_f">Patients(F) Registered</td><td id="cons_reg">Consults Registered</td><td id="pt_reg_avg">Patients Served Daily</td>
+						<td id="pt_reg">Patients Registered</td><td id="pt_reg_m">Patients(M) Registered</td><td id="pt_reg_f">Patients(F) Registered</td><td id="cons_reg">Consults Registered</td><td id="pt_reg_avg">Patients Served Daily</td>
 						</tr>
 					</tbody>
 				</table>
@@ -36,7 +36,7 @@ th, td {
 </div>
 <table class="table table-striped">
 	<thead>
-		<tr><th>Site</th><th>Patients Registered</th><th>Patients(M) Registered</th><th>Patients(F) Registered</th><th>Consults Registered</th><th>Patients Served Daily</th><th>Date of Last Consult</th>
+		<tr><th>Site</th><th>Patients Registered</th><td>Invalid Numbers</td><th>Patients(M) Registered</th><th>Patients(F) Registered</th><th>Consults Registered</th><th>Patients Served Daily</th><th>Date of Last Consult</th>
 		</tr>
 	</thead>
 <?php
