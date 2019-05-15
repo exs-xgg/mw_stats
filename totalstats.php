@@ -21,7 +21,7 @@ th, td {
 				<table class="table">
 					<thead>
 						<tr>
-							<th>Patients Registered</th><th>Patients(M) Registered</th><th>Patients(F) Registered</th><th>Consults Registered</th><th>Patients Served Daily</th>
+							<th>Patients Registered</th><td>Invalid Numbers</td><th>Patients(M) Registered</th><th>Patients(F) Registered</th><th>Consults Registered</th><th>Patients Served Daily</th>
 						</tr>
 					</thead>
 					<tbody>
