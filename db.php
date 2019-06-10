@@ -1,7 +1,11 @@
 <?php
 
 
-$dbarray = array("hf_abradeilog1"=>"hf_abradeilog1",
+$dbarray = array(
+  "hf_dinas1" => "hf_dinas1",
+  "hf_catanauan1" => "hf_catanauan1",
+  "hf_bangui1" => "hf_bangui1",
+  "hf_abradeilog1"=>"hf_abradeilog1",
 "hf_agno1"=>"hf_agno1",
 "hf_aguilar1"=>"hf_aguilar1",
 "hf_alilem1"=>"hf_alilem1",
