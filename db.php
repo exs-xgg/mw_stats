@@ -105,7 +105,6 @@ $dbarray = array(
 "hf_motiong1"=>"hf_motiong1",
 "hf_nagarhu1"=>"hf_nagarhu1",
 "hf_narrarhu1"=>"hf_narrarhu1",
-""=>"",
 "hf_norzagaray2"=>"hf_norzagaray2",
 "hf_norzagaray3"=>"hf_norzagaray3",
 "hf_norzagarayrhu1"=>"hf_norzagarayrhu1",
