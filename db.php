@@ -2,6 +2,7 @@
 
 
 $dbarray = array(
+  "hf_cataingan1" = "hf_cataingan1",
   "hf_dinas1" => "hf_dinas1",
   "hf_catanauan1" => "hf_catanauan1",
   "hf_bangui1" => "hf_bangui1",
