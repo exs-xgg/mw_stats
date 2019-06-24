@@ -14,7 +14,7 @@
 	}
 
 
-	$dbConnect = mysql_connect("localhost","root","");
+	$dbConnect = mysql_connect("localhost","root","root");
 	
 	// $conn = mysqli_connect("localhost","root","root");
 ?>
@@ -73,9 +73,9 @@
 
 
 							//###################################################
-							mysql_select_db('cuy1',$dbConnect);
+							mysql_select_db($dbName,$dbConnect);
 							
-	$conn = mysqli_connect("localhost","root","",'cuy1');
+	$conn = mysqli_connect("localhost","root","root",$dbName);
 
 							$patientCount = "SELECT ( SELECT count(*) FROM patient where created_at between date('$start_date') and date('$end_date')) as patient,
 							( SELECT count(*) FROM consult where created_at between date('$start_date') and date('$end_date')) as consult,
