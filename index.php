@@ -14,9 +14,9 @@
 	}
 
 
-	$dbConnect = mysql_connect("192.168.100.11","root","root");
+	$dbConnect = mysql_connect("localhost","root","");
 	
-	$conn = mysqli_connect("192.168.100.11","root","root");
+	// $conn = mysqli_connect("localhost","root","root");
 ?>
 <html>
 <head>
@@ -71,7 +71,11 @@
 							$dbName = $_POST['rhu'];
 							$_SESSION['rhu'] = $dbName;
 
-							mysql_select_db($dbName,$dbConnect);
+
+							//###################################################
+							mysql_select_db('cuy1',$dbConnect);
+							
+	$conn = mysqli_connect("localhost","root","",'cuy1');
 
 							$patientCount = "SELECT ( SELECT count(*) FROM patient where created_at between date('$start_date') and date('$end_date')) as patient,
 							( SELECT count(*) FROM consult where created_at between date('$start_date') and date('$end_date')) as consult,
@@ -235,18 +239,23 @@
 				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-danger">Top 10 Morbidity</div></div>
 			</div>
 			<table class="table table-striped">
+			'<tr><td>Morb</td><td>M</td><td>F</td><td>Total</td></tr>'
 			<?php
 			if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit'){
 				//SELECT icd10_code, count(1) as ctt  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id group by icd10_code order by ctt desc limit 10
-				$query_string = "SELECT icd10_code, count(1) as ctt  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id group by icd10_code order by ctt desc limit 10";
-				$query2 = $conn->query($patient_philhealth);
-				// $result2= mysql_fetch_array($query2);
+				$query_string = "SELECT consult_notes_final_dx.icd10_code, count(1) as ctt, icd10_desc  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id inner join lib_icd10 on lib_icd10.icd10_code = consult_notes_final_dx.icd10_code group by icd10_code order by ctt desc limit 10";
+				
+				$query2 = $conn->query($query_string);
 				while($row = $query2->fetch_assoc() ){
-					echo $row['icd10_code'];
+					$icd10 = $row['icd10_code'];
+					$icd10d = $row['icd10_desc'];
+					$count = $row['ctt'];
+					$subquery_m_f = "SELECT count(1) as ct, gender  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id where icd10_code='$icd10' group by gender";
+
+					echo '<tr><td>'.$icd10d.'</td><td>100</td><td>100</td><td>'.$count.'</td></tr>';
 				}
 			}
 			?>
-				<tr><td>Morbidity</td><td>100</td></tr>
 			</table>
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-danger">Blood Type*</div></div>

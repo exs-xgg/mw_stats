@@ -4,6 +4,9 @@
 36-59
 60 <
 
+select * from consult
+
+
 select count(*) as ct from patient where (TIMESTAMPDIFF(year,birthdate, now()) <= (5))
 Array ( 
 [0] => 153 [_5b] => 153 
