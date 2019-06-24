@@ -1,5 +1,5 @@
 <?php
-	error_reporting(E_ERROR | E_PARSE);
+	// error_reporting(E_ERROR | E_PARSE);
 	require_once 'db.php';
 	// $dbHost = "localhost";
 	// $dbUser = "root";
@@ -15,6 +15,8 @@
 
 
 	$dbConnect = mysql_connect("192.168.100.11","root","root");
+	
+	$conn = mysqli_connect("192.168.100.11","root","root");
 ?>
 <html>
 <head>
@@ -228,6 +230,23 @@
 							
 						}	
 					?>
+			</table>
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-danger">Top 10 Morbidity</div></div>
+			</div>
+			<table class="table table-striped">
+			<?php
+			if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit'){
+				//SELECT icd10_code, count(1) as ctt  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id group by icd10_code order by ctt desc limit 10
+				$query_string = "SELECT icd10_code, count(1) as ctt  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id group by icd10_code order by ctt desc limit 10";
+				$query2 = $conn->query($patient_philhealth);
+				// $result2= mysql_fetch_array($query2);
+				while($row = $query2->fetch_assoc() ){
+					echo $row['icd10_code'];
+				}
+			}
+			?>
+				<tr><td>Morbidity</td><td>100</td></tr>
 			</table>
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-danger">Blood Type*</div></div>
