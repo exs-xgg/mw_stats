@@ -239,7 +239,7 @@
 				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-danger">Top 10 Morbidity</div></div>
 			</div>
 			<table class="table table-striped">
-			'<tr><td>Morb</td><td>M</td><td>F</td><td>Total</td></tr>'
+			<tr><th>Morbidity</th><th>F</th><th>M</th><th>Total</th></tr>
 			<?php
 			if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit'){
 				//SELECT icd10_code, count(1) as ctt  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id group by icd10_code order by ctt desc limit 10
@@ -250,9 +250,17 @@
 					$icd10 = $row['icd10_code'];
 					$icd10d = $row['icd10_desc'];
 					$count = $row['ctt'];
-					$subquery_m_f = "SELECT count(1) as ct, gender  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id where icd10_code='$icd10' group by gender";
 
-					echo '<tr><td>'.$icd10d.'</td><td>100</td><td>100</td><td>'.$count.'</td></tr>';
+					echo '<tr><td>'.$icd10d.'</td><td>';
+
+					$subquery_m_f = "SELECT count(1) as ct, gender  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id where icd10_code='$icd10' group by gender order by gender desc";
+					$res_gender_sort = $conn->query($subquery_m_f);
+					while($r = $res_gender_sort->fetch_assoc()){
+						echo $r['ct'] . '</td><td>';
+					}
+
+					
+					echo $count.'</td></tr>';
 				}
 			}
 			?>
