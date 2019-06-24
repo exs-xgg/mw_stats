@@ -1,5 +1,5 @@
 <?php
-	// error_reporting(E_ERROR | E_PARSE);
+	error_reporting(E_ERROR | E_PARSE);
 	require_once 'db.php';
 	// $dbHost = "localhost";
 	// $dbUser = "root";
@@ -14,7 +14,7 @@
 	}
 
 
-	$dbConnect = mysql_connect("localhost","root","root");
+	$dbConnect = mysql_connect("192.168.100.11","root","root");
 	
 	// $conn = mysqli_connect("localhost","root","root");
 ?>
@@ -75,7 +75,7 @@
 							//###################################################
 							mysql_select_db($dbName,$dbConnect);
 							
-	$conn = mysqli_connect("localhost","root","root",$dbName);
+	$conn = mysqli_connect("192.168.100.11","root","root",$dbName);
 
 							$patientCount = "SELECT ( SELECT count(*) FROM patient where created_at between date('$start_date') and date('$end_date')) as patient,
 							( SELECT count(*) FROM consult where created_at between date('$start_date') and date('$end_date')) as consult,
@@ -236,14 +236,15 @@
 					?>
 			</table>
 			<div class="row">
-				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-danger">Top 10 Morbidity</div></div>
+				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-success">Top 10 Morbidity</div></div>
 			</div>
 			<table class="table table-striped">
 			<tr><th>Morbidity</th><th>F</th><th>M</th><th>Total</th></tr>
 			<?php
 			if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit'){
 				//SELECT icd10_code, count(1) as ctt  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id group by icd10_code order by ctt desc limit 10
-				$query_string = "SELECT consult_notes_final_dx.icd10_code, count(1) as ctt, icd10_desc  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id inner join lib_icd10 on lib_icd10.icd10_code = consult_notes_final_dx.icd10_code group by icd10_code order by ctt desc limit 10";
+				$query_string = "SELECT consult_notes_final_dx.icd10_code, count(1) as ctt, icd10_desc  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id inner join lib_icd10 on lib_icd10.icd10_code = consult_notes_final_dx.icd10_code where consult_notes_final_dx.updated_at between date('$start_date') and date('$end_date') group by icd10_code order by ctt desc limit 10";
+				// echo $query_string;
 				
 				$query2 = $conn->query($query_string);
 				while($row = $query2->fetch_assoc() ){
@@ -253,7 +254,7 @@
 
 					echo '<tr><td>'.$icd10d.'</td><td>';
 
-					$subquery_m_f = "SELECT count(1) as ct, gender  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id where icd10_code='$icd10' group by gender order by gender desc";
+					$subquery_m_f = "SELECT count(1) as ct, gender  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id where icd10_code='$icd10' group by gender order by gender asc";
 					$res_gender_sort = $conn->query($subquery_m_f);
 					while($r = $res_gender_sort->fetch_assoc()){
 						echo $r['ct'] . '</td><td>';
