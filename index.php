@@ -236,33 +236,38 @@
 					?>
 			</table>
 			<div class="row">
-				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-success">Top 10 Morbidity</div></div>
+				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-success">Top 10 Morbidity (MW ONLY)</div></div>
 			</div>
 			<table class="table table-striped">
 			<tr><th>Morbidity</th><th>F</th><th>M</th><th>Total</th></tr>
 			<?php
-			if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit'){
+		if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit' && ($is_misuwah > 0)){
 				//SELECT icd10_code, count(1) as ctt  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id group by icd10_code order by ctt desc limit 10
 				$query_string = "SELECT consult_notes_final_dx.icd10_code, count(1) as ctt, icd10_desc  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id inner join lib_icd10 on lib_icd10.icd10_code = consult_notes_final_dx.icd10_code where consult_notes_final_dx.updated_at between date('$start_date') and date('$end_date') group by icd10_code order by ctt desc limit 10";
 				// echo $query_string;
 				
 				$query2 = $conn->query($query_string);
-				while($row = $query2->fetch_assoc() ){
-					$icd10 = $row['icd10_code'];
-					$icd10d = $row['icd10_desc'];
-					$count = $row['ctt'];
-
-					echo '<tr><td>'.$icd10d.'</td><td>';
-
-					$subquery_m_f = "SELECT count(1) as ct, gender  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id where icd10_code='$icd10' group by gender order by gender asc";
-					$res_gender_sort = $conn->query($subquery_m_f);
-					while($r = $res_gender_sort->fetch_assoc()){
-						echo $r['ct'] . '</td><td>';
+				try {
+					while($row = $query2->fetch_assoc() ){
+						$icd10 = $row['icd10_code'];
+						$icd10d = $row['icd10_desc'];
+						$count = $row['ctt'];
+	
+						echo '<tr><td>'.$icd10d.'</td><td>';
+	
+						$subquery_m_f = "SELECT count(1) as ct, gender  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id where icd10_code='$icd10' group by gender order by gender asc";
+						$res_gender_sort = $conn->query($subquery_m_f);
+						while($r = $res_gender_sort->fetch_assoc()){
+							echo $r['ct'] . '</td><td>';
+						}
+	
+						
+						echo $count.'</td></tr>';
 					}
-
-					
-					echo $count.'</td></tr>';
+				} catch (Error $e) {
+					echo "hehe";
 				}
+				
 			}
 			?>
 			</table>
