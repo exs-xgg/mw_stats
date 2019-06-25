@@ -241,6 +241,9 @@
 			<table class="table table-striped">
 			<tr><th>Morbidity</th><th>F</th><th>M</th><th>Total</th></tr>
 			<?php
+			
+	$test = $conn->query("select * from patient");
+	$is_misuwah = $test->num_rows;
 		if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit' && ($is_misuwah > 0)){
 				//SELECT icd10_code, count(1) as ctt  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id group by icd10_code order by ctt desc limit 10
 				$query_string = "SELECT consult_notes_final_dx.icd10_code, count(1) as ctt, icd10_desc  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id inner join lib_icd10 on lib_icd10.icd10_code = consult_notes_final_dx.icd10_code where consult_notes_final_dx.updated_at between date('$start_date') and date('$end_date') group by icd10_code order by ctt desc limit 10";
