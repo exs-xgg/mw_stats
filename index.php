@@ -239,14 +239,22 @@
 				<div class="col-lg-12 col-md-12 col-xs-12 text-center"><div class="alert alert-success">Top 10 Morbidity (MW ONLY)</div></div>
 			</div>
 			<table class="table table-striped">
-			<tr><th>Morbidity</th><th>F</th><th>M</th><th>Total</th></tr>
+			<tr><th>Morbidity</th><th>F</th><th>M</th><th>Others</th><th>Total</th></tr>
 			<?php
 			
-	$test = $conn->query("select * from patient");
-	$is_misuwah = $test->num_rows;
-		if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit' && ($is_misuwah > 0)){
+	
+		if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit'){
 				//SELECT icd10_code, count(1) as ctt  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id group by icd10_code order by ctt desc limit 10
-				$query_string = "SELECT consult_notes_final_dx.icd10_code, count(1) as ctt, icd10_desc  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id inner join lib_icd10 on lib_icd10.icd10_code = consult_notes_final_dx.icd10_code where consult_notes_final_dx.updated_at between date('$start_date') and date('$end_date') group by icd10_code order by ctt desc limit 10";
+				//SELECT consult_notes_final_dx.icd10_code, count(1) as ctt, icd10_desc  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id inner join lib_icd10 using(icd10_code) where consult_notes_final_dx.updated_at between date('2012-02-02') and date('2019-01-01') group by icd10_code order by ctt desc limit 10
+
+				$test = $conn->query("select * from patient");
+				$is_misuwah = $test->num_rows;
+				if(($is_misuwah > 0)){
+					$query_string = "SELECT consult_notes_final_dx.icd10_code, count(1) as ctt, icd10_desc  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id inner join lib_icd10 using(icd10_code) where is_morbidity='Y' and consult_notes_final_dx.updated_at between date('$start_date') and date('$end_date') group by icd10_code order by ctt desc limit 10";
+				}else{
+					$query_string = "SELECT class_name as icd10_desc, class_id as icd10_code, count(1) as ctt FROM `m_consult_notes_dxclass` a inner join m_lib_notes_dxclass b using (class_id) inner join m_patient using (patient_id) where morbidity='Y' and diagnosis_date between date('$start_date') and date('$end_date') group by class_name order by ctt desc limit 10";
+				}
+				
 				// echo $query_string;
 				
 				$query2 = $conn->query($query_string);
@@ -257,14 +265,28 @@
 						$count = $row['ctt'];
 	
 						echo '<tr><td>'.$icd10d.'</td><td>';
-	
-						$subquery_m_f = "SELECT count(1) as ct, gender  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id where icd10_code='$icd10' group by gender order by gender asc";
+						if(($is_misuwah > 0)){
+							$subquery_m_f = "SELECT count(1) as ct, gender  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id where icd10_code='$icd10' group by gender order by gender asc";
+						}else{
+							$subquery_m_f = "SELECT count(1) as ct, patient_gender as gender  FROM `m_consult_notes_dxclass` inner join m_patient using(patient_id) where `class_id`='$icd10' group by gender order by gender asc";
+						}
+						// echo $subquery_m_f;
+						$m_total_morb="";
+						$f_total_morb = "";
+						$wtf_total_morb = "";
 						$res_gender_sort = $conn->query($subquery_m_f);
 						while($r = $res_gender_sort->fetch_assoc()){
-							echo $r['ct'] . '</td><td>';
+							if($r['gender']=="M"){
+								$m_total_morb =  $r['ct'];
+							}elseif($r['gender']=="F"){
+								$f_total_morb =  $r['ct'] ;
+							}else{
+								$wtf_total_morb = $r['ct'] ;
+							}
+							
 						}
 	
-						
+						echo $f_total_morb . '</td><td>' . $m_total_morb  . '</td><td>'. $wtf_total_morb . '</td><td>';
 						echo $count.'</td></tr>';
 					}
 				} catch (Error $e) {
