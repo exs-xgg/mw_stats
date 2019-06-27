@@ -651,7 +651,7 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 				$teenage_preg=$result2['teenage_preg'];	
 				$total_preg=$result2['total_preg'];	
 				
-				echo $teenage_preg . ' / ' . $total_preg ;
+				echo 'Teenage Pregnancies: '.$teenage_preg . ' <br>Total Pregnancies: ' . $total_preg ;
 				} ?></h1>
 			</div>
 			<button class="btn btn-success" onclick="phic()">Generate Invalid Philhealth</button> <button class="btn btn-primary" onclick="cell()">Generate Invalid Numbers</button>
