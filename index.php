@@ -620,7 +620,7 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 			</table>
 			<div class="row">
 				<div class="col-12 text-center"><div class="alert alert-danger">PREGNANT REGISTERED</div></div>
-				<h1 class="text=center" align="center"><?php 
+				<?php 
 				if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 				{ 
 					//MISUWAH	
@@ -651,8 +651,8 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 				$teenage_preg=$result2['teenage_preg'];	
 				$total_preg=$result2['total_preg'];	
 				
-				echo 'Teenage Pregnancies: '.$teenage_preg . ' <br>Total Pregnancies: ' . $total_preg ;
-				} ?></h1>
+				echo 'Total Pregnancies: '. $total_preg . ' <br> Teenage Pregnancies: ' .  $teenage_preg;
+				} ?>
 			</div>
 			<button class="btn btn-success" onclick="phic()">Generate Invalid Philhealth</button> <button class="btn btn-primary" onclick="cell()">Generate Invalid Numbers</button>
 	</div>
