@@ -36,7 +36,7 @@ th, td {
 </div>
 <table class="table table-striped">
 	<thead>
-		<tr><th>Site</th><th>Patients Registered</th><td>Invalid Numbers</td><th>Patients(M) Registered</th><th>Patients(F) Registered</th><th>Consults Registered</th><th>Patients Served Daily</th><th>Date of Last Consult</th>
+		<tr><th>Site</th><th>Patients Registered</th><td>Invalid Numbers</td><th>Patients(M) Registered</th><th>Patients(F) Registered</th><th>Consults Registered</th><th>CN</th><th>MC</th><th>CC</th><th>FP</th><th>Patients Served Daily</th><th>Date of Last Consult</th>
 		</tr>
 	</thead>
 <?php
@@ -64,6 +64,11 @@ foreach ($dbarray as $key => $value) {
 		$query_string = "SELECT ( SELECT count(*) FROM patient where created_at between date('$start_date') and date('$end_date')) as patient,
 
 		( SELECT count(*) FROM consult where created_at between date('$start_date') and date('$end_date')) as consult,
+		( SELECT count(*) FROM consult where (ptgroup='cn' or ptgroup='') and created_at between date('$start_date') and date('$end_date')) as consult_cn,
+		( SELECT count(*) FROM consult where ptgroup='mc' and created_at between date('$start_date') and date('$end_date')) as consult_mc,
+		( SELECT count(*) FROM consult where ptgroup='cc' and created_at between date('$start_date') and date('$end_date')) as consult_cc,
+		( SELECT count(*) FROM consult where ptgroup='fp' and created_at between date('$start_date') and date('$end_date')) as consult_fp,
+		
 
 ( SELECT date(created_at) FROM consult order by created_at desc limit 1) as last_date,
 
@@ -77,6 +82,11 @@ foreach ($dbarray as $key => $value) {
 
 ( SELECT count(*) FROM m_consult where consult_date between date('$start_date') and date('$end_date')) as consult,
 ( SELECT date(`consult_timestamp`) FROM m_consult order by `consult_timestamp` desc limit 1) as last_date,
+
+( SELECT count(*) FROM m_consult where (consult_visit_type='cn' or consult_visit_type='') and consult_date between date('$start_date') and date('$end_date')) as consult_cn,
+		( SELECT count(*) FROM m_consult where consult_visit_type='mc' and consult_date between date('$start_date') and date('$end_date')) as consult_mc,
+		( SELECT count(*) FROM m_consult where consult_visit_type='cc' and consult_date between date('$start_date') and date('$end_date')) as consult_cc,
+		( SELECT count(*) FROM m_consult where consult_visit_type='fp' and consult_date between date('$start_date') and date('$end_date')) as consult_fp,
 
 								(select count(*) as ct from m_patient where registration_date between date('$start_date') and date('$end_date')  and patient_gender like 'M') as 'patient_f',
 								(SELECT count(*) FROM m_patient WHERE patient_cellphone = '0000000000' or length(patient_cellphone) != 11 or patient_cellphone = '1111111111' or patient_cellphone='9000000000') AS invalid_phone,
@@ -95,6 +105,11 @@ foreach ($dbarray as $key => $value) {
 		echo "<td>" . $result_array['patient_m'] . '</td>';
 		echo "<td>" . $result_array['patient_f'] . '</td>';
 		echo "<td>" . $result_array['consult'] . '</td>';
+		echo "<td>" . $result_array['consult_cn'] . '</td>';
+		echo "<td>" . $result_array['consult_mc'] . '</td>';
+		echo "<td>" . $result_array['consult_cc'] . '</td>';
+		echo "<td>" . $result_array['consult_fp'] . '</td>';
+
 		echo "<td>" . $result_array['avg_registered'] . '</td>';
 		echo "<td>" . $result_array['last_date'] . '</td>';
 	
