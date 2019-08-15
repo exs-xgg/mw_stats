@@ -21,7 +21,7 @@
 <html>
 <head>
 	<title>Hybrid Report Generation</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
 	<meta author="Wireless Access for Health">
 </head>
 <body>
@@ -127,8 +127,8 @@
 						{ 
 
 							$patient_philhealth = "SELECT concat(concat((SELECT count(*) FROM patient_philhealth WHERE member_cat_id ='18'),'/'),(SELECT count(*) FROM patient_philhealth WHERE member_cat_id <= 9)) AS nhts,
-							(SELECT count(*) FROM patient_philhealth WHERE member_id ='MM') AS member,
-							(SELECT count(*) FROM patient_philhealth WHERE member_id ='DD') AS dependent,
+							(SELECT count(*) FROM patient_philhealth WHERE member_id ='MM' and member_cat_id ='18') AS member,
+							(SELECT count(*) FROM patient_philhealth WHERE member_id ='DD' and member_cat_id ='18') AS dependent,
 							(SELECT count(*) FROM patient_philhealth) AS patient_philhealth,
 							(SELECT count(*) FROM user) AS user,
 							(SELECT count(*) FROM user WHERE is_active = 'Y') AS useractive,
@@ -176,7 +176,7 @@
 				<tr>
 				<th>Invalid Philhealth Numbers*</th>
 				<th>Empty Family Folder*</th>
-				<th>Invalid Phone Numbers*</th>
+				<th>Invalid Phone Numbers</th>
 				<th>Duplicate Patiens (WAHFFLE)*</th>
 				<th>Date of Last Consultation</th>
 				</tr>
@@ -187,7 +187,7 @@
 							$patient_philhealth = "SELECT 
 							(SELECT count(*) FROM patient_philhealth where ((length(philhealth_id)!=14) and philhealth_id like '%-%') OR (length(philhealth_id)!=12 and philhealth_id not like '%-%')) AS invalid_philhealth,
 							(0) AS empty_fam,
-							(SELECT count(*) FROM patient WHERE mobile_number = '0000000000' or length(mobile_number) != 10 or mobile_number = '1111111111' or mobile_number='9000000000') AS invalid_phone,
+							(SELECT count(*) FROM patient WHERE ( created_at between date('$start_date') and date('$end_date')) and mobile_number = '0000000000' or length(mobile_number) != 10 or mobile_number = '1111111111' or mobile_number='9000000000') AS invalid_phone,
 							(SELECT date(created_at) FROM consult order by created_at desc limit 1) as last_consult";
 							// $query2 = $database->_dbQuery($patient_philhealth);
 							// $result2=$database->_dbFetch($query2);
@@ -266,9 +266,9 @@
 	
 						echo '<tr><td>'.$icd10d.'</td><td>';
 						if(($is_misuwah > 0)){
-							$subquery_m_f = "SELECT count(1) as ct, gender  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id where icd10_code='$icd10' group by gender order by gender asc";
+							$subquery_m_f = "SELECT count(1) as ct, gender  FROM `consult_notes_final_dx` inner join consult_notes on consult_notes.id = consult_notes_final_dx.notes_id inner join patient on patient.id = consult_notes.patient_id where icd10_code='$icd10' and consult_notes_final_dx.updated_at between date('$start_date') and date('$end_date') group by gender order by gender asc";
 						}else{
-							$subquery_m_f = "SELECT count(1) as ct, patient_gender as gender  FROM `m_consult_notes_dxclass` inner join m_patient using(patient_id) where `class_id`='$icd10' group by gender order by gender asc";
+							$subquery_m_f = "SELECT count(1) as ct, patient_gender as gender  FROM `m_consult_notes_dxclass` inner join m_patient using(patient_id) where `class_id`='$icd10' and consult_notes_final_dx.updated_at between date('$start_date') and date('$end_date') group by gender order by gender asc";
 						}
 						// echo $subquery_m_f;
 						$m_total_morb="";

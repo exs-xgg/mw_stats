@@ -41,7 +41,7 @@ th, td {
 	</thead>
 <?php
 
-	error_reporting(E_ERROR | E_PARSE);
+	// error_reporting(E_ERROR | E_PARSE);
 require_once 'db.php';
 //GLOBAL VARS
 $start_date = $_GET['s'];
