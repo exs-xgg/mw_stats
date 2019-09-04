@@ -115,8 +115,8 @@
 				<thead>
 					<tr>
 						<th>PHIC Members Registered* (NHTS vs Formal)</th>
-						<th>PhilHealth Member Count*</th>
-						<th>PhilHealth Dependent Count*</th>
+						<th>PhilHealth NHTS Member Count*</th>
+						<th>PhilHealth NHTS Dependent Count*</th>
 						<th>PhilHealth Count*</th>
 						<th>User Count/Active/In-active*</th>
 					</tr>
@@ -126,7 +126,7 @@
 						if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 						{ 
 
-							$patient_philhealth = "SELECT concat(concat((SELECT count(*) FROM patient_philhealth WHERE member_cat_id ='18'),'/'),(SELECT count(*) FROM patient_philhealth WHERE member_cat_id <= 9)) AS nhts,
+							$patient_philhealth = "SELECT concat(concat((SELECT count(*) FROM patient_philhealth WHERE member_cat_id ='18'),'/'),(SELECT count(*) FROM patient_philhealth WHERE member_cat_id != 18)) AS nhts,
 							(SELECT count(*) FROM patient_philhealth WHERE member_id ='MM' and member_cat_id ='18') AS member,
 							(SELECT count(*) FROM patient_philhealth WHERE member_id ='DD' and member_cat_id ='18') AS dependent,
 							(SELECT count(*) FROM patient_philhealth) AS patient_philhealth,
