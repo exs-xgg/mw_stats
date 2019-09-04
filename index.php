@@ -114,10 +114,10 @@
 			<table class='table'>
 				<thead>
 					<tr>
-						<th>PHIC Members Registered* (NHTS vs Formal)</th>
-						<th>PhilHealth NHTS Member Count*</th>
-						<th>PhilHealth NHTS Dependent Count*</th>
-						<th>PhilHealth Total Enlisted Count*</th>
+						<th>PHIC Members Registered (NHTS vs Formal)</th>
+						<th>PhilHealth NHTS Member Count</th>
+						<th>PhilHealth NHTS Dependent Count</th>
+						<th>PhilHealth Total Enlisted Count</th>
 						<th>User Count/Active/In-active*</th>
 					</tr>
 				</thead>
@@ -126,10 +126,10 @@
 						if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 						{ 
 
-							$patient_philhealth = "SELECT concat(concat((SELECT count(*) FROM patient_philhealth WHERE member_cat_id ='18'),'/'),(SELECT count(*) FROM patient_philhealth WHERE member_cat_id != 18)) AS nhts,
-							(SELECT count(*) FROM patient_philhealth WHERE member_id ='MM' and member_cat_id ='18') AS member,
-							(SELECT count(*) FROM patient_philhealth WHERE member_id ='DD' and member_cat_id ='18') AS dependent,
-							(SELECT count(*) FROM patient_philhealth) AS patient_philhealth,
+							$patient_philhealth = "SELECT concat(concat((SELECT count(*) FROM patient_philhealth WHERE member_cat_id ='18' and created_at between date('$start_date') and date('$end_date')),'/'),(SELECT count(*) FROM patient_philhealth WHERE member_cat_id != 18 and created_at between date('$start_date') and date('$end_date'))) AS nhts,
+							(SELECT count(*) FROM patient_philhealth WHERE member_id ='MM' and member_cat_id ='18' and created_at between date('$start_date') and date('$end_date')) AS member,
+							(SELECT count(*) FROM patient_philhealth WHERE member_id ='DD' and member_cat_id ='18' and created_at between date('$start_date') and date('$end_date')) AS dependent,
+							(SELECT count(*) FROM patient_philhealth where created_at between date('$start_date') and date('$end_date')) AS patient_philhealth,
 							(SELECT count(*) FROM user) AS user,
 							(SELECT count(*) FROM user WHERE is_active = 'Y') AS useractive,
 							(SELECT count(*) FROM user WHERE is_active = 'N') AS userinactive";
@@ -304,15 +304,15 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 { 
 	//MISUWAH
 	$patient_philhealth = "select 
-	(select count(*) as om from patient where blood_type='O-') as om ,
-	(select count(*) as om from patient where blood_type='O+') as op, 
-	(select count(*) as om from patient where blood_type='A-') as am, 
-	(select count(*) as om from patient where blood_type='A+') as ap,
-	(select count(*) as om from patient where blood_type='B-') as bm, 
-	(select count(*) as om from patient where blood_type='B+') as bp, 
-	(select count(*) as om from patient where blood_type='AB+') as abp, 
-	(select count(*) as om from patient where blood_type='AB-') as abm,
-	(select count(*) as om from patient where blood_type='' or blood_type='NA') as na";
+	(select count(*) as om from patient where created_at between date('$start_date') and date('$end_date') and  blood_type='O-') as om ,
+	(select count(*) as om from patient where created_at between date('$start_date') and date('$end_date') and  blood_type='O+') as op, 
+	(select count(*) as om from patient where created_at between date('$start_date') and date('$end_date') and  blood_type='A-') as am, 
+	(select count(*) as om from patient where created_at between date('$start_date') and date('$end_date') and  blood_type='A+') as ap,
+	(select count(*) as om from patient where created_at between date('$start_date') and date('$end_date') and  blood_type='B-') as bm, 
+	(select count(*) as om from patient where created_at between date('$start_date') and date('$end_date') and  blood_type='B+') as bp, 
+	(select count(*) as om from patient where created_at between date('$start_date') and date('$end_date') and  blood_type='AB+') as abp, 
+	(select count(*) as om from patient where created_at between date('$start_date') and date('$end_date') and  blood_type='AB-') as abm,
+	(select count(*) as om from patient where created_at between date('$start_date') and date('$end_date') and  blood_type='' or blood_type='NA') as na";
 	// $query2 = $database->_dbQuery($patient_philhealth);
 	// $result2=$database->_dbFetch($query2);
 	//
@@ -536,41 +536,41 @@ if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 	//MISUWAH
 	$patient_philhealth = "
 	select
-	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='cn' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as cn_f,
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='cn' and ( c.created_at between date('$start_date') and date('$end_date'))) as cn_f,
 		
-	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='cn' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as cn_m,
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='cn' and ( c.created_at between date('$start_date') and date('$end_date'))) as cn_m,
 
-	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='tb' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as tb_f,
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='tb' and ( c.created_at between date('$start_date') and date('$end_date'))) as tb_f,
 		
-	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='tb' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as tb_m,
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='tb' and ( c.created_at between date('$start_date') and date('$end_date'))) as tb_m,
 
-	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='mc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as mc_f,
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='mc' and ( c.created_at between date('$start_date') and date('$end_date'))) as mc_f,
 
-	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='mc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as mc_m,
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='mc' and ( c.created_at between date('$start_date') and date('$end_date'))) as mc_m,
 
-	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='cc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as cc_f,
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='cc' and ( c.created_at between date('$start_date') and date('$end_date'))) as cc_f,
 
-	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='cc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as cc_m,
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='cc' and ( c.created_at between date('$start_date') and date('$end_date'))) as cc_m,
 
-	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='fp' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as fp_f,
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='fp' and ( c.created_at between date('$start_date') and date('$end_date'))) as fp_f,
 
-	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='fp' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as fp_m,
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='fp' and ( c.created_at between date('$start_date') and date('$end_date'))) as fp_m,
 
-	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='dn' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as dn_f,
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='dn' and ( c.created_at between date('$start_date') and date('$end_date'))) as dn_f,
 
-	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='dn' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as dn_m,
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='dn' and ( c.created_at between date('$start_date') and date('$end_date'))) as dn_m,
 
-	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='nc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as nc_f,
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='nc' and ( c.created_at between date('$start_date') and date('$end_date'))) as nc_f,
 
-	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='nc' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as nc_m,	
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='nc' and ( c.created_at between date('$start_date') and date('$end_date'))) as nc_m,	
 
-	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='ab' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as ab_f,
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='F' and c.ptgroup='ab' and ( c.created_at between date('$start_date') and date('$end_date'))) as ab_f,
 
-	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='ab' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as ab_m,	
+	(select count(*) from consult c inner join patient p on p.id=c.patient_id where p.gender='M' and c.ptgroup='ab' and ( c.created_at between date('$start_date') and date('$end_date'))) as ab_m,	
 
-	(select count(*) from consult_laboratory c inner join patient p on p.id=c.patient_id where p.gender='M' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as lab_m,
+	(select count(*) from consult_laboratory c inner join patient p on p.id=c.patient_id where p.gender='M' and ( c.created_at between date('$start_date') and date('$end_date'))) as lab_m,
 
-	(select count(*) from consult_laboratory c inner join patient p on p.id=c.patient_id where p.gender='F' and (c.created_at between date('2018-01-01') AND date('2018-12-31'))) as lab_f
+	(select count(*) from consult_laboratory c inner join patient p on p.id=c.patient_id where p.gender='F' and ( c.created_at between date('$start_date') and date('$end_date'))) as lab_f
 	";
 	
 	$query2 = mysql_query($patient_philhealth);
