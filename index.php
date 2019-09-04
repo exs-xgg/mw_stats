@@ -126,10 +126,10 @@
 						if (isset($_REQUEST['go']) && $_REQUEST['go'] == 'Submit')
 						{ 
 
-							$patient_philhealth = "SELECT concat(concat((SELECT count(*) FROM patient_philhealth WHERE member_cat_id ='18' and created_at between date('$start_date') and date('$end_date')),'/'),(SELECT count(*) FROM patient_philhealth WHERE member_cat_id != 18 and created_at between date('$start_date') and date('$end_date'))) AS nhts,
-							(SELECT count(*) FROM patient_philhealth WHERE member_id ='MM' and member_cat_id ='18' and created_at between date('$start_date') and date('$end_date')) AS member,
-							(SELECT count(*) FROM patient_philhealth WHERE member_id ='DD' and member_cat_id ='18' and created_at between date('$start_date') and date('$end_date')) AS dependent,
-							(SELECT count(*) FROM patient_philhealth where created_at between date('$start_date') and date('$end_date')) AS patient_philhealth,
+							$patient_philhealth = "SELECT concat(concat((SELECT count(*) FROM patient_philhealth WHERE member_cat_id ='18' and enlistment_date between date('$start_date') and date('$end_date')),'/'),(SELECT count(*) FROM patient_philhealth WHERE member_cat_id != 18 and enlistment_date between date('$start_date') and date('$end_date'))) AS nhts,
+							(SELECT count(*) FROM patient_philhealth WHERE member_id ='MM' and member_cat_id ='18' and enlistment_date between date('$start_date') and date('$end_date')) AS member,
+							(SELECT count(*) FROM patient_philhealth WHERE member_id ='DD' and member_cat_id ='18' and enlistment_date between date('$start_date') and date('$end_date')) AS dependent,
+							(SELECT count(*) FROM patient_philhealth where enlistment_date between date('$start_date') and date('$end_date')) AS patient_philhealth,
 							(SELECT count(*) FROM user) AS user,
 							(SELECT count(*) FROM user WHERE is_active = 'Y') AS useractive,
 							(SELECT count(*) FROM user WHERE is_active = 'N') AS userinactive";
