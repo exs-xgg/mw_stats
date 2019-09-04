@@ -2,6 +2,9 @@
 
 
 $dbarray = array(
+  "Dipaculao RHU" => "hf_dipaculao1",
+  "Dilasag RHU" => "hf_dilasag",
+  "San Luis RHU" => "hf_sanluis1",
 "Lapuyan RHU"=>"hf_lapuyan1",
 "Leon Postigo RHU"=>"hf_leonpostigo1",
 "URBIZTONDO RURAL HEALTH UNIT" => "DOH000000000000010",
