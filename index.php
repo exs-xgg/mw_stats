@@ -117,7 +117,7 @@
 						<th>PHIC Members Registered* (NHTS vs Formal)</th>
 						<th>PhilHealth NHTS Member Count*</th>
 						<th>PhilHealth NHTS Dependent Count*</th>
-						<th>PhilHealth Count*</th>
+						<th>PhilHealth Total Enlisted Count*</th>
 						<th>User Count/Active/In-active*</th>
 					</tr>
 				</thead>
